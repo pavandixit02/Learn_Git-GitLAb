@@ -1,0 +1,1766 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GitLab SSH Key - Complete Guide</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #fc6d26;
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            max-width: 850px;
+            margin: auto;
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            display: inline-block;
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 5px 9px;
+        }
+
+        nav a:hover {
+            color: #fc6d26;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        h2 {
+            color: #fc6d26;
+            font-size: 29px;
+            border-bottom: 2px solid #ffe1d3;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #334155;
+            font-size: 21px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: #475569;
+            margin-top: 18px;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 18px 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #111827;
+        }
+
+        /* CARDS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: #fc6d26;
+            margin-top: 0;
+        }
+
+        /* NOTES */
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #fc6d26;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .info {
+            background: #eff6ff;
+            border-left: 5px solid #3b82f6;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .success {
+            background: #f0fdf4;
+            border-left: 5px solid #22c55e;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .danger {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        /* CODE */
+        pre {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 8px;
+            padding: 18px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: Consolas, Monaco, monospace;
+            color: #0f172a;
+        }
+
+        /* TABLE */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dbe2ea;
+            padding: 13px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #fff1eb;
+            color: #9a3412;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* WORKFLOW */
+        .workflow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .step {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 23px;
+            color: #94a3b8;
+        }
+
+        /* TERMINAL */
+        .terminal {
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        .terminal code {
+            color: #e5e7eb;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        /* MOBILE */
+        @media (max-width: 700px) {
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <h1>GitLab SSH Key - Complete Guide</h1>
+
+        <p>
+            Learn how to generate an SSH key, add it to GitLab,
+            verify the connection and securely clone, pull and push
+            Git repositories using SSH.
+        </p>
+
+    </header>
+
+
+    <!-- NAVIGATION -->
+    <nav>
+
+        <a href="#intro">SSH Introduction</a>
+        <a href="#https-vs-ssh">HTTPS vs SSH</a>
+        <a href="#check">Check Existing Key</a>
+        <a href="#generate">Generate Key</a>
+        <a href="#agent">SSH Agent</a>
+        <a href="#gitlab">Add to GitLab</a>
+        <a href="#test">Test Connection</a>
+        <a href="#clone">Clone</a>
+        <a href="#push">Push</a>
+        <a href="#troubleshoot">Troubleshooting</a>
+        <a href="#security">Security</a>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <!-- 1 -->
+        <section id="intro">
+
+            <h2>1. What is SSH?</h2>
+
+            <p>
+                <strong>SSH (Secure Shell)</strong> is a cryptographic
+                network protocol that provides secure communication
+                between two systems over an untrusted network.
+            </p>
+
+            <p>
+                GitLab mein SSH ka use primarily Git operations ko
+                authenticate karne ke liye kiya ja sakta hai, jaise:
+            </p>
+
+            <ul>
+
+                <li>Git clone</li>
+                <li>Git fetch</li>
+                <li>Git pull</li>
+                <li>Git push</li>
+
+            </ul>
+
+            <div class="note">
+
+                <strong>Simple Definition:</strong>
+
+                SSH ek secure authentication method hai jisse tum
+                apne computer ko GitLab account ke saath authenticate
+                kar sakte ho without entering your GitLab password
+                for every Git operation.
+
+            </div>
+
+
+            <h3>SSH ka Real-Life Example</h3>
+
+            <p>
+
+                Imagine karo tumhare paas ek house hai.
+
+                <br><br>
+
+                <strong>Private Key</strong> = Tumhari secret key
+
+                <br>
+
+                <strong>Public Key</strong> = Lock ke corresponding
+                public information
+
+                <br>
+
+                <strong>GitLab</strong> = Secure server
+
+            </p>
+
+            <p>
+
+                Private key tumhare computer par rehti hai.
+                Public key GitLab account mein add hoti hai.
+
+                GitLab tumhari private key ko kabhi receive nahi karta.
+
+            </p>
+
+        </section>
+
+
+        <!-- 2 -->
+        <section id="https-vs-ssh">
+
+            <h2>2. HTTPS vs SSH</h2>
+
+            <p>
+
+                Git repository ke saath communicate karne ke liye
+                GitLab mein HTTPS aur SSH dono approaches use ki ja
+                sakti hain.
+
+            </p>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Feature</th>
+                            <th>HTTPS</th>
+                            <th>SSH</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Authentication</td>
+                            <td>HTTPS credentials/token based authentication</td>
+                            <td>SSH key based authentication</td>
+                        </tr>
+
+                        <tr>
+                            <td>URL Example</td>
+                            <td>https://gitlab.com/user/project.git</td>
+                            <td>git@gitlab.com:user/project.git</td>
+                        </tr>
+
+                        <tr>
+                            <td>SSH Key Required</td>
+                            <td>No</td>
+                            <td>Yes</td>
+                        </tr>
+
+                        <tr>
+                            <td>Repeated Credential Entry</td>
+                            <td>Depends on credential configuration</td>
+                            <td>Normally not required after setup</td>
+                        </tr>
+
+                        <tr>
+                            <td>Common DevOps Usage</td>
+                            <td>Common</td>
+                            <td>Very common</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="info">
+
+                <strong>Important:</strong>
+
+                SSH authentication does not mean that GitLab receives
+                or stores your private key. Only the public key should
+                be added to GitLab.
+
+            </div>
+
+        </section>
+
+
+        <!-- 3 -->
+        <section id="check">
+
+            <h2>3. Step 1 — Check Existing SSH Key</h2>
+
+            <p>
+
+                New SSH key generate karne se pehle check karo ki
+                tumhare system mein already SSH key available hai ya nahi.
+
+            </p>
+
+
+            <h3>Linux / Ubuntu</h3>
+
+            <div class="terminal">
+
+                <code>
+ls -la ~/.ssh
+                </code>
+
+            </div>
+
+
+            <h3>Common SSH Key Files</h3>
+
+            <ul>
+
+                <li>id_ed25519</li>
+                <li>id_ed25519.pub</li>
+                <li>id_rsa</li>
+                <li>id_rsa.pub</li>
+
+            </ul>
+
+
+            <div class="danger">
+
+                <strong>Important:</strong>
+
+                <br><br>
+
+                <code>id_ed25519</code> or <code>id_rsa</code>
+                private key ho sakti hai.
+
+                <br>
+
+                <code>id_ed25519.pub</code> or <code>id_rsa.pub</code>
+                public key hoti hai.
+
+                <br><br>
+
+                <strong>
+                    Private key ko GitLab, GitHub, WhatsApp,
+                    email ya kisi person ke saath share mat karo.
+                </strong>
+
+            </div>
+
+
+            <h3>Check Public Key</h3>
+
+            <div class="terminal">
+
+                <code>
+cat ~/.ssh/id_ed25519.pub
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Agar file exist nahi karti, tab new key generate kar sakte ho.
+
+            </p>
+
+        </section>
+
+
+        <!-- 4 -->
+        <section id="generate">
+
+            <h2>4. Step 2 — Generate SSH Key</h2>
+
+            <p>
+
+                Modern systems par Ed25519 key commonly recommended
+                option hai because it provides strong security with
+                a compact key size.
+
+            </p>
+
+
+            <h3>Recommended Command</h3>
+
+            <div class="terminal">
+
+                <code>
+ssh-keygen -t ed25519 -C "your-email@example.com"
+                </code>
+
+            </div>
+
+
+            <h3>Command Breakdown</h3>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Part</th>
+                        <th>Meaning</th>
+                    </tr>
+
+                    <tr>
+                        <td>ssh-keygen</td>
+                        <td>SSH key generation utility</td>
+                    </tr>
+
+                    <tr>
+                        <td>-t</td>
+                        <td>Key type specify karta hai</td>
+                    </tr>
+
+                    <tr>
+                        <td>ed25519</td>
+                        <td>Ed25519 key algorithm</td>
+                    </tr>
+
+                    <tr>
+                        <td>-C</td>
+                        <td>Comment add karta hai</td>
+                    </tr>
+
+                    <tr>
+                        <td>Email</td>
+                        <td>Key ko identify karne ke liye comment</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+
+            <h3>Command Run Karne ke Baad</h3>
+
+            <p>
+
+                Terminal tumse file location pooch sakta hai:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+Enter file in which to save the key
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Default location accept karne ke liye
+                <strong>Enter</strong> press kar sakte ho.
+
+            </p>
+
+
+            <h3>Passphrase</h3>
+
+            <p>
+
+                SSH key generation ke time passphrase set karna
+                security improve kar sakta hai.
+
+            </p>
+
+
+            <div class="success">
+
+                <strong>Recommended:</strong>
+
+                Agar practical environment hai, to private key ko
+                passphrase ke saath protect karna useful hai.
+
+            </div>
+
+
+            <h3>Generated Files</h3>
+
+            <div class="terminal">
+
+                <code>
+~/.ssh/id_ed25519
+~/.ssh/id_ed25519.pub
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Yahan:
+
+            </p>
+
+            <ul>
+
+                <li>
+                    <strong>id_ed25519</strong> =
+                    Private Key
+                </li>
+
+                <li>
+                    <strong>id_ed25519.pub</strong> =
+                    Public Key
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- 5 -->
+        <section id="agent">
+
+            <h2>5. Step 3 — Start SSH Agent</h2>
+
+            <p>
+
+                SSH agent private keys ko memory mein manage karne
+                mein help karta hai, especially jab key passphrase
+                protected ho.
+
+            </p>
+
+
+            <h3>Start SSH Agent</h3>
+
+            <div class="terminal">
+
+                <code>
+eval "$(ssh-agent -s)"
+                </code>
+
+            </div>
+
+
+            <h3>Add Private Key to Agent</h3>
+
+            <div class="terminal">
+
+                <code>
+ssh-add ~/.ssh/id_ed25519
+                </code>
+
+            </div>
+
+
+            <h3>Check Loaded Keys</h3>
+
+            <div class="terminal">
+
+                <code>
+ssh-add -l
+                </code>
+
+            </div>
+
+
+            <div class="info">
+
+                <strong>Remember:</strong>
+
+                <br>
+
+                ssh-agent mein private key add karna
+                GitLab ko private key upload karna nahi hai.
+
+                <br><br>
+
+                Private key tumhare local system par hi rehti hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- 6 -->
+        <section id="gitlab">
+
+            <h2>6. Step 4 — Copy Public SSH Key</h2>
+
+            <p>
+
+                Ab humein sirf <strong>public key</strong> copy karni hai.
+
+            </p>
+
+
+            <h3>Linux / Ubuntu</h3>
+
+            <div class="terminal">
+
+                <code>
+cat ~/.ssh/id_ed25519.pub
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Output kuch is type ka hoga:
+
+            </p>
+
+            <pre><code>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIxxxxxxxxxxxxxxxxxxxxxxxx your-email@example.com</code></pre>
+
+
+            <div class="danger">
+
+                <strong>DO NOT COPY THIS:</strong>
+
+                <br>
+
+                <code>~/.ssh/id_ed25519</code>
+
+                <br><br>
+
+                Ye private key hai.
+
+            </div>
+
+
+            <h3>Public Key Copy Karna</h3>
+
+            <div class="terminal">
+
+                <code>
+cat ~/.ssh/id_ed25519.pub
+                </code>
+
+            </div>
+
+            <p>
+
+                Complete single line ko copy karo.
+
+            </p>
+
+        </section>
+
+
+        <!-- 7 -->
+        <section>
+
+            <h2>7. Step 5 — Add SSH Key to GitLab</h2>
+
+            <h3>GitLab Account mein Login Karo</h3>
+
+            <ol>
+
+                <li>GitLab open karo.</li>
+
+                <li>Apne account mein login karo.</li>
+
+                <li>Profile/settings area open karo.</li>
+
+                <li>SSH Keys section find karo.</li>
+
+            </ol>
+
+
+            <h3>SSH Keys Page</h3>
+
+            <p>
+
+                GitLab mein SSH Keys settings page par:
+
+            </p>
+
+            <ol>
+
+                <li>Public SSH key paste karo.</li>
+
+                <li>Key ke liye descriptive title enter karo.</li>
+
+                <li>Available usage/type options ko check karo.</li>
+
+                <li>Key add/save karo.</li>
+
+            </ol>
+
+
+            <div class="note">
+
+                <strong>Example Title:</strong>
+
+                <br>
+
+                Ubuntu Laptop
+
+                <br><br>
+
+                Ya:
+
+                <br>
+
+                Dell Precision Ubuntu
+
+            </div>
+
+
+            <p>
+
+                Title ka purpose hai ki future mein tum identify
+                kar sako ki kaunsi machine ki SSH key GitLab account
+                mein registered hai.
+
+            </p>
+
+        </section>
+
+
+        <!-- 8 -->
+        <section id="test">
+
+            <h2>8. Step 6 — Test GitLab SSH Connection</h2>
+
+            <p>
+
+                Key add karne ke baad connection test karna important hai.
+
+            </p>
+
+
+            <h3>Command</h3>
+
+            <div class="terminal">
+
+                <code>
+ssh -T git@gitlab.com
+                </code>
+
+            </div>
+
+
+            <p>
+
+                First connection par SSH host authenticity confirmation
+                prompt aa sakta hai.
+
+            </p>
+
+
+            <p>
+
+                GitLab ke current official documentation ke according
+                expected successful authentication message account
+                authentication confirm karta hai.
+
+            </p>
+
+
+            <div class="success">
+
+                <strong>Success ka meaning:</strong>
+
+                <br><br>
+
+                Tumhara local SSH client GitLab ke SSH server se
+                authenticate kar pa raha hai.
+
+            </div>
+
+
+            <h3>Verbose Mode</h3>
+
+            <p>
+
+                Agar connection fail ho raha hai, detailed debugging
+                information ke liye:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+ssh -Tvvv git@gitlab.com
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- 9 -->
+        <section id="clone">
+
+            <h2>9. Step 7 — GitLab Repository Clone Using SSH</h2>
+
+            <p>
+
+                GitLab repository page par jao aur
+                <strong>Clone → SSH</strong> option select karo.
+
+            </p>
+
+
+            <h3>Example SSH URL</h3>
+
+            <pre><code>git@gitlab.com:username/project-name.git</code></pre>
+
+
+            <h3>Clone Command</h3>
+
+            <div class="terminal">
+
+                <code>
+git clone git@gitlab.com:username/project-name.git
+                </code>
+
+            </div>
+
+
+            <h3>Enter Project Directory</h3>
+
+            <div class="terminal">
+
+                <code>
+cd project-name
+                </code>
+
+            </div>
+
+
+            <h3>Check Remote</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Output mein SSH URL visible hona chahiye.
+
+            </p>
+
+        </section>
+
+
+        <!-- 10 -->
+        <section id="push">
+
+            <h2>10. Step 8 — Push Code Using SSH</h2>
+
+            <p>
+
+                Agar repository already SSH remote ke saath configured hai,
+                to normal Git commands use kar sakte ho.
+
+            </p>
+
+
+            <h3>Check Status</h3>
+
+            <div class="terminal">
+
+                <code>
+git status
+                </code>
+
+            </div>
+
+
+            <h3>Add Files</h3>
+
+            <div class="terminal">
+
+                <code>
+git add .
+                </code>
+
+            </div>
+
+
+            <h3>Commit</h3>
+
+            <div class="terminal">
+
+                <code>
+git commit -m "Update project"
+                </code>
+
+            </div>
+
+
+            <h3>Push</h3>
+
+            <div class="terminal">
+
+                <code>
+git push origin main
+                </code>
+
+            </div>
+
+
+            <div class="success">
+
+                SSH configured hone ke baad Git operations
+                SSH authentication ke through GitLab ke saath
+                communicate kar sakte hain.
+
+            </div>
+
+        </section>
+
+
+        <!-- 11 -->
+        <section>
+
+            <h2>11. Complete SSH Workflow</h2>
+
+            <div class="workflow">
+
+                <div class="step">
+                    Check SSH
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">
+                    Generate Key
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">
+                    Start Agent
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">
+                    Add Key
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">
+                    GitLab
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">
+                    Test
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">
+                    Clone
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">
+                    Push / Pull
+                </div>
+
+            </div>
+
+
+            <pre><code>
+LOCAL MACHINE
+     |
+     | Private Key
+     |
+     v
+SSH CLIENT
+     |
+     | Secure SSH Connection
+     |
+     v
+GITLAB SSH SERVER
+     |
+     | Authentication
+     |
+     v
+GITLAB REPOSITORY
+            </code></pre>
+
+        </section>
+
+
+        <!-- 12 -->
+        <section id="troubleshoot">
+
+            <h2>12. Common SSH Errors & Solutions</h2>
+
+
+            <h3>Error 1 — Permission denied (publickey)</h3>
+
+            <div class="terminal">
+
+                <code>
+Permission denied (publickey).
+                </code>
+
+            </div>
+
+
+            <h4>Possible Reasons</h4>
+
+            <ul>
+
+                <li>SSH key GitLab account mein add nahi hai.</li>
+
+                <li>Wrong public key add ki gayi hai.</li>
+
+                <li>SSH agent mein key loaded nahi hai.</li>
+
+                <li>Wrong private key use ho rahi hai.</li>
+
+                <li>SSH configuration incorrect hai.</li>
+
+            </ul>
+
+
+            <h4>Check Agent</h4>
+
+            <div class="terminal">
+
+                <code>
+ssh-add -l
+                </code>
+
+            </div>
+
+
+            <h4>Add Key</h4>
+
+            <div class="terminal">
+
+                <code>
+ssh-add ~/.ssh/id_ed25519
+                </code>
+
+            </div>
+
+
+            <h4>Test Again</h4>
+
+            <div class="terminal">
+
+                <code>
+ssh -T git@gitlab.com
+                </code>
+
+            </div>
+
+
+            <h3>Error 2 — Repository uses HTTPS</h3>
+
+            <p>
+
+                Check:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Agar remote kuch aisa hai:
+
+            </p>
+
+            <pre><code>https://gitlab.com/username/project.git</code></pre>
+
+            <p>
+
+                aur tum SSH use karna chahte ho, remote URL change kar sakte ho.
+
+            </p>
+
+
+            <h3>Change HTTPS to SSH</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote set-url origin git@gitlab.com:username/project.git
+                </code>
+
+            </div>
+
+
+            <h3>Verify</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <h3>Error 3 — SSH Key File Not Found</h3>
+
+            <div class="terminal">
+
+                <code>
+ls -la ~/.ssh
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Agar expected key nahi hai to correct key path identify
+                karo ya new SSH key generate karo.
+
+            </p>
+
+        </section>
+
+
+        <!-- 13 -->
+        <section>
+
+            <h2>13. SSH Config File</h2>
+
+            <p>
+
+                Agar multiple SSH keys ya multiple Git hosting accounts
+                use kar rahe ho, to SSH config useful ho sakti hai.
+
+            </p>
+
+
+            <h3>Config File</h3>
+
+            <div class="terminal">
+
+                <code>
+~/.ssh/config
+                </code>
+
+            </div>
+
+
+            <h3>Example</h3>
+
+            <pre><code>Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes</code></pre>
+
+
+            <div class="info">
+
+                <strong>Note:</strong>
+
+                Multiple accounts/keys configure karte waqt
+                host aliases aur identity selection ko carefully
+                configure karna chahiye.
+
+            </div>
+
+        </section>
+
+
+        <!-- 14 -->
+        <section>
+
+            <h2>14. RSA vs Ed25519</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>Feature</th>
+                        <th>Ed25519</th>
+                        <th>RSA</th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Modern Choice</td>
+                        <td>Yes</td>
+                        <td>Older but widely supported</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Key Size</td>
+                        <td>Compact</td>
+                        <td>Usually much larger</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Performance</td>
+                        <td>Efficient</td>
+                        <td>Generally heavier</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Command</td>
+
+                        <td>
+                            <code>ssh-keygen -t ed25519</code>
+                        </td>
+
+                        <td>
+                            <code>ssh-keygen -t rsa -b 4096</code>
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+
+            <div class="success">
+
+                <strong>Learning Recommendation:</strong>
+
+                New Linux/DevOps setup mein Ed25519 ko first option
+                ke roop mein samajhna useful hai. Legacy compatibility
+                ke case mein RSA ki zarurat ho sakti hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- 15 -->
+        <section id="security">
+
+            <h2>15. SSH Security Best Practices</h2>
+
+            <ul>
+
+                <li>
+                    Private key kabhi share mat karo.
+                </li>
+
+                <li>
+                    Public key aur private key ka difference samjho.
+                </li>
+
+                <li>
+                    Private key ko unnecessary locations par copy mat karo.
+                </li>
+
+                <li>
+                    Passphrase protected key use karna consider karo.
+                </li>
+
+                <li>
+                    Public key ko sirf trusted services/accounts mein add karo.
+                </li>
+
+                <li>
+                    Lost/stolen machine ki SSH key ko GitLab se revoke/remove karo.
+                </li>
+
+                <li>
+                    Multiple machines ke liye separate keys maintain karna useful ho sakta hai.
+                </li>
+
+            </ul>
+
+
+            <div class="danger">
+
+                <strong>NEVER SHARE:</strong>
+
+                <pre><code>-----BEGIN OPENSSH PRIVATE KEY-----
+...
+-----END OPENSSH PRIVATE KEY-----</code></pre>
+
+                Agar private key expose ho jaaye, us key ko compromised
+                maan kar GitLab account se remove/rotate karna chahiye.
+
+            </div>
+
+        </section>
+
+
+        <!-- 16 -->
+        <section>
+
+            <h2>16. One-Page Command Cheat Sheet</h2>
+
+            <pre><code>
+# Check SSH directory
+ls -la ~/.ssh
+
+# Generate Ed25519 key
+ssh-keygen -t ed25519 -C "your-email@example.com"
+
+# Start SSH agent
+eval "$(ssh-agent -s)"
+
+# Add key
+ssh-add ~/.ssh/id_ed25519
+
+# List loaded keys
+ssh-add -l
+
+# Display public key
+cat ~/.ssh/id_ed25519.pub
+
+# Test GitLab
+ssh -T git@gitlab.com
+
+# Clone GitLab repository
+git clone git@gitlab.com:USERNAME/PROJECT.git
+
+# Check remote
+git remote -v
+
+# Change remote to SSH
+git remote set-url origin git@gitlab.com:USERNAME/PROJECT.git
+
+# Add changes
+git add .
+
+# Commit
+git commit -m "Update project"
+
+# Push
+git push origin main
+            </code></pre>
+
+        </section>
+
+
+        <!-- 17 -->
+        <section>
+
+            <h2>17. Interview Questions</h2>
+
+            <ol>
+
+                <li>What is SSH?</li>
+
+                <li>Why is SSH used with GitLab?</li>
+
+                <li>What is the difference between public and private keys?</li>
+
+                <li>Where should the private SSH key be stored?</li>
+
+                <li>How do you generate an Ed25519 SSH key?</li>
+
+                <li>What is ssh-agent?</li>
+
+                <li>How do you add a private key to ssh-agent?</li>
+
+                <li>How do you add an SSH key to GitLab?</li>
+
+                <li>How do you test GitLab SSH authentication?</li>
+
+                <li>What does Permission denied (publickey) mean?</li>
+
+                <li>How do you change a Git remote from HTTPS to SSH?</li>
+
+                <li>What is the difference between RSA and Ed25519?</li>
+
+                <li>What is the purpose of ~/.ssh/config?</li>
+
+                <li>Should you upload a private key to GitLab?</li>
+
+                <li>What happens if an SSH private key is compromised?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- 18 -->
+        <section>
+
+            <h2>18. Practical Assignment</h2>
+
+            <h3>Assignment — GitLab SSH Setup</h3>
+
+            <ol>
+
+                <li>Check whether SSH keys already exist.</li>
+
+                <li>Generate an Ed25519 key.</li>
+
+                <li>Start ssh-agent.</li>
+
+                <li>Add your private key to ssh-agent.</li>
+
+                <li>Copy your public key.</li>
+
+                <li>Add the public key to GitLab.</li>
+
+                <li>Test the connection using ssh -T.</li>
+
+                <li>Create a GitLab repository.</li>
+
+                <li>Clone it using SSH.</li>
+
+                <li>Create a file.</li>
+
+                <li>Commit the file.</li>
+
+                <li>Push it to GitLab.</li>
+
+                <li>Verify the commit on GitLab.</li>
+
+            </ol>
+
+
+            <h3>Expected Workflow</h3>
+
+            <div class="workflow">
+
+                <div class="step">SSH Key</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">GitLab Account</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">SSH Test</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Clone</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Commit</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Push</div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINAL -->
+        <section>
+
+            <h2>19. Final Revision</h2>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>SSH</h3>
+
+                    <p>
+                        Secure authentication and communication protocol.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Private Key</h3>
+
+                    <p>
+                        Secret key stored on your local machine.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Public Key</h3>
+
+                    <p>
+                        Key that can be added to GitLab.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>ssh-agent</h3>
+
+                    <p>
+                        Helps manage private keys for SSH authentication.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>GitLab SSH</h3>
+
+                    <p>
+                        Enables SSH-based Git authentication.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Test Command</h3>
+
+                    <p>
+                        <code>ssh -T git@gitlab.com</code>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+
+                <strong>Golden Rule:</strong>
+
+                <br><br>
+
+                <code>PUBLIC KEY → GitLab</code>
+
+                <br>
+
+                <code>PRIVATE KEY → NEVER SHARE</code>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <footer>
+
+        <p>
+            GitLab SSH Complete Learning Notes
+        </p>
+
+        <p>
+            Git • GitLab • SSH • DevOps • CI/CD
+        </p>
+
+    </footer>
+
+</body>
+
+</html>

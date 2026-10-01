@@ -1,0 +1,2463 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GitLab Groups, Projects & Push Code - Complete Guide</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #fc6d26;
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            max-width: 900px;
+            margin: auto;
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            display: inline-block;
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 5px 9px;
+        }
+
+        nav a:hover {
+            color: #fc6d26;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        h2 {
+            color: #fc6d26;
+            font-size: 29px;
+            border-bottom: 2px solid #ffe1d3;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #334155;
+            font-size: 21px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: #475569;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 18px 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #111827;
+        }
+
+        /* CARDS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: #fc6d26;
+            margin-top: 0;
+        }
+
+        /* NOTES */
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #fc6d26;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .info {
+            background: #eff6ff;
+            border-left: 5px solid #3b82f6;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .success {
+            background: #f0fdf4;
+            border-left: 5px solid #22c55e;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .warning {
+            background: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .danger {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        /* CODE */
+        pre {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 8px;
+            padding: 18px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: Consolas, Monaco, monospace;
+            color: #0f172a;
+        }
+
+        .terminal {
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        .terminal code {
+            color: #e5e7eb;
+        }
+
+        /* TABLE */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dbe2ea;
+            padding: 13px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #fff1eb;
+            color: #9a3412;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* WORKFLOW */
+        .workflow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .step {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 23px;
+            color: #94a3b8;
+        }
+
+        /* DIAGRAM */
+        .diagram {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        /* MOBILE */
+        @media (max-width: 700px) {
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+    <header>
+
+        <h1>GitLab Groups, Projects & Push Code</h1>
+
+        <p>
+            Complete beginner-to-intermediate notes for understanding
+            GitLab Groups, Subgroups, Projects, Multiple Projects and
+            how to push local code to GitLab using Git and SSH.
+        </p>
+
+    </header>
+
+
+    <!-- NAVIGATION -->
+    <nav>
+
+        <a href="#groups">Groups</a>
+        <a href="#subgroups">Subgroups</a>
+        <a href="#projects">Projects</a>
+        <a href="#multiple">Multiple Projects</a>
+        <a href="#structure">Structure</a>
+        <a href="#push">Push Code</a>
+        <a href="#ssh">SSH Push</a>
+        <a href="#https">HTTPS Push</a>
+        <a href="#existing">Existing Project</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#errors">Errors</a>
+        <a href="#assignment">Assignment</a>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <!-- ====================================================== -->
+        <!-- GROUPS -->
+        <!-- ====================================================== -->
+
+        <section id="groups">
+
+            <h2>1. What is a GitLab Group?</h2>
+
+            <p>
+
+                <strong>GitLab Group</strong> ek organizational container
+                hai jisme tum related projects ko ek common place par
+                organize aur manage kar sakte ho.
+
+            </p>
+
+            <p>
+
+                Simple words mein:
+
+                <strong>
+                    Group = Multiple related projects ko organize
+                    karne ka container.
+                </strong>
+
+            </p>
+
+
+            <div class="note">
+
+                <strong>Real-Life Analogy:</strong>
+
+                <br><br>
+
+                Socho ek company hai:
+
+                <br><br>
+
+                <strong>Company</strong> → Group
+
+                <br>
+
+                <strong>Development Department</strong> → Subgroup
+
+                <br>
+
+                <strong>Project A, Project B, Project C</strong> → Projects
+
+            </div>
+
+
+            <h3>Group ki zarurat kyu hoti hai?</h3>
+
+            <ul>
+
+                <li>Multiple projects ko organize karne ke liye.</li>
+
+                <li>Team members ke access ko manage karne ke liye.</li>
+
+                <li>Related repositories ko ek common namespace mein rakhne ke liye.</li>
+
+                <li>Team collaboration ko simplify karne ke liye.</li>
+
+                <li>Large organization ke projects ko structured way mein manage karne ke liye.</li>
+
+            </ul>
+
+
+            <h3>Example</h3>
+
+            <div class="diagram">
+
+DevOps-Team
+│
+├── linux-project
+├── docker-project
+├── kubernetes-project
+├── terraform-project
+└── aws-project
+
+            </div>
+
+
+            <p>
+
+                Yahan <strong>DevOps-Team</strong> ek Group hai aur
+                uske andar multiple Projects hain.
+
+            </p>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- SUBGROUP -->
+        <!-- ====================================================== -->
+
+        <section id="subgroups">
+
+            <h2>2. What is a GitLab Subgroup?</h2>
+
+            <p>
+
+                Large organizations mein ek group ke andar
+                <strong>Subgroups</strong> create kiye ja sakte hain.
+
+            </p>
+
+            <p>
+
+                Subgroup ka purpose projects ko aur granular
+                organizational structure mein divide karna hai.
+
+            </p>
+
+
+            <h3>Example</h3>
+
+            <div class="diagram">
+
+My-Company
+│
+├── DevOps
+│   ├── CI-CD
+│   │   ├── Jenkins
+│   │   └── GitLab-CI
+│   │
+│   ├── Cloud
+│   │   ├── AWS
+│   │   └── Azure
+│   │
+│   └── Kubernetes
+│       ├── Production
+│       └── Development
+│
+└── Development
+    ├── Frontend
+    └── Backend
+
+            </div>
+
+
+            <p>
+
+                Is structure mein:
+
+            </p>
+
+            <ul>
+
+                <li><strong>My-Company</strong> = Top-level Group</li>
+
+                <li><strong>DevOps</strong> = Subgroup</li>
+
+                <li><strong>CI-CD</strong> = Nested Subgroup</li>
+
+                <li><strong>GitLab-CI</strong> = Project</li>
+
+            </ul>
+
+
+            <div class="info">
+
+                <strong>DevOps Learning Tip:</strong>
+
+                Small personal projects ke liye subgroup ki zarurat
+                nahi hoti. Large team ya organization environment
+                mein groups/subgroups ka concept important ho jata hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- GROUP VS PROJECT -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>3. Group vs Project</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>Feature</th>
+
+                        <th>Group</th>
+
+                        <th>Project</th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Purpose</td>
+
+                        <td>
+                            Projects ko organize karna
+                        </td>
+
+                        <td>
+                            Actual code/repository manage karna
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Contains</td>
+
+                        <td>
+                            Projects aur subgroups
+                        </td>
+
+                        <td>
+                            Repository, issues, CI/CD, settings etc.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Code Repository</td>
+
+                        <td>
+                            Directly repository nahi hota
+                        </td>
+
+                        <td>
+                            Yes
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Example</td>
+
+                        <td>
+                            DevOps Team
+                        </td>
+
+                        <td>
+                            Docker Project
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+
+            <div class="success">
+
+                <strong>Remember:</strong>
+
+                <br><br>
+
+                Group organization ke liye hota hai.
+
+                <br>
+
+                Project actual software/code work ke liye hota hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- CREATE GROUP -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>4. How to Create a GitLab Group?</h2>
+
+            <ol>
+
+                <li>GitLab account mein login karo.</li>
+
+                <li>New Group / Create Group option open karo.</li>
+
+                <li>Group name enter karo.</li>
+
+                <li>Group URL/namespace check karo.</li>
+
+                <li>Visibility choose karo.</li>
+
+                <li>Group create karo.</li>
+
+            </ol>
+
+
+            <h3>Example Group</h3>
+
+            <pre><code>Group Name:
+DevOps-Learning</code></pre>
+
+
+            <p>
+
+                Is group ke andar tum DevOps learning ke multiple
+                projects rakh sakte ho.
+
+            </p>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- PROJECT -->
+        <!-- ====================================================== -->
+
+        <section id="projects">
+
+            <h2>5. What is a GitLab Project?</h2>
+
+            <p>
+
+                GitLab mein <strong>Project</strong> ek complete workspace
+                hota hai jisme source code repository aur software
+                development se related tools manage kiye ja sakte hain.
+
+            </p>
+
+
+            <h3>Project mein kya hota hai?</h3>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Repository</h3>
+
+                    <p>
+                        Source code aur Git history.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Branches</h3>
+
+                    <p>
+                        Different development lines.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Issues</h3>
+
+                    <p>
+                        Bugs, tasks aur features.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Merge Requests</h3>
+
+                    <p>
+                        Code review aur merging.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>CI/CD</h3>
+
+                    <p>
+                        Build, test aur deployment automation.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Settings</h3>
+
+                    <p>
+                        Repository aur project configuration.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h3>Example Projects</h3>
+
+            <pre><code>devops-linux
+docker-learning
+kubernetes-learning
+terraform-aws
+gitlab-ci-cd
+python-automation
+portfolio
+monitoring-project</code></pre>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- MULTIPLE PROJECTS -->
+        <!-- ====================================================== -->
+
+        <section id="multiple">
+
+            <h2>6. Multiple Projects in GitLab</h2>
+
+            <p>
+
+                GitLab mein tum ek account ke under multiple projects
+                create aur manage kar sakte ho.
+
+            </p>
+
+
+            <h3>Personal Learning Example</h3>
+
+            <div class="diagram">
+
+GitLab Account
+│
+└── DevOps-Learning Group
+    │
+    ├── Git-Learning
+    ├── GitLab-Learning
+    ├── Docker-Learning
+    ├── Kubernetes-Learning
+    ├── Terraform-Learning
+    ├── AWS-Learning
+    ├── Python-DevOps
+    └── CI-CD-Project
+
+            </div>
+
+
+            <p>
+
+                Is approach ka benefit ye hai ki har technology ka
+                separate repository/project maintain kar sakte ho.
+
+            </p>
+
+
+            <h3>Multiple Projects kyu useful hain?</h3>
+
+            <ul>
+
+                <li>Projects organized rehte hain.</li>
+
+                <li>Har project ki separate Git history hoti hai.</li>
+
+                <li>Har project ka separate README ho sakta hai.</li>
+
+                <li>Har project ka separate CI/CD pipeline ho sakta hai.</li>
+
+                <li>Project-specific access control possible hota hai.</li>
+
+                <li>Portfolio ko clean structure milta hai.</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- PROJECT STRUCTURE -->
+        <!-- ====================================================== -->
+
+        <section id="structure">
+
+            <h2>7. Recommended GitLab Structure for DevOps Learning</h2>
+
+            <p>
+
+                Agar tum DevOps seekh rahe ho, to projects ko
+                technology ke according organize karna useful hai.
+
+            </p>
+
+
+            <div class="diagram">
+
+Pavan-DevOps
+│
+├── Git
+│   └── git-practice
+│
+├── GitLab
+│   ├── gitlab-notes
+│   └── gitlab-ci-practice
+│
+├── Linux
+│   └── linux-admin-practice
+│
+├── Docker
+│   └── docker-project
+│
+├── Kubernetes
+│   └── kubernetes-project
+│
+├── Terraform
+│   └── terraform-aws
+│
+├── Python
+│   └── python-devops-automation
+│
+└── CI-CD
+    └── complete-devops-pipeline
+
+            </div>
+
+
+            <div class="note">
+
+                <strong>Portfolio Tip:</strong>
+
+                Sirf empty repositories banane ke bajay har project mein
+                proper README, architecture diagram, setup instructions,
+                commands aur screenshots/results maintain karo.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- PUSH INTRO -->
+        <!-- ====================================================== -->
+
+        <section id="push">
+
+            <h2>8. How to Push Local Code to GitLab?</h2>
+
+            <p>
+
+                Local computer par jo project tum VS Code ya kisi
+                editor mein bana rahe ho, usko GitLab repository mein
+                upload/push karne ke liye Git commands use ki jaati hain.
+
+            </p>
+
+
+            <div class="workflow">
+
+                <div class="step">Local Project</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git init</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git add</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git commit</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git remote</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git push</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">GitLab</div>
+
+            </div>
+
+
+            <h3>Basic Git Flow</h3>
+
+            <pre><code>
+Working Directory
+       ↓
+   git add
+       ↓
+Staging Area
+       ↓
+  git commit
+       ↓
+Local Repository
+       ↓
+   git push
+       ↓
+GitLab Repository
+            </code></pre>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- CREATE PROJECT -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>9. Step 1 — Create GitLab Project</h2>
+
+            <ol>
+
+                <li>GitLab account mein login karo.</li>
+
+                <li>New Project create karo.</li>
+
+                <li>Project name enter karo.</li>
+
+                <li>Visibility select karo.</li>
+
+                <li>Project create karo.</li>
+
+            </ol>
+
+
+            <h3>Example</h3>
+
+            <pre><code>Project Name:
+python-devops-automation</code></pre>
+
+
+            <div class="warning">
+
+                Agar tumhare paas already local project hai aur usko
+                first time push kar rahe ho, to GitLab project create
+                karte waqt README/license/.gitignore initialize karne
+                se pehle apne local repository state ko consider karo.
+                Beginner workflow mein empty remote repository rakhna
+                conflicts ko simple bana sakta hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- LOCAL PROJECT -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>10. Step 2 — Open Local Project</h2>
+
+            <p>
+
+                Terminal open karo aur apne project folder mein jao.
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+cd ~/Documents/python-devops-automation
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Verify karne ke liye:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+ls
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Windows par example:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+cd C:\Users\YourName\Documents\python-devops-automation
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- GIT INIT -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>11. Step 3 — Initialize Git Repository</h2>
+
+            <div class="terminal">
+
+                <code>
+git init
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Ye current project folder ko Git repository bana deta hai.
+
+            </p>
+
+
+            <h3>Check Status</h3>
+
+            <div class="terminal">
+
+                <code>
+git status
+                </code>
+
+            </div>
+
+
+            <div class="info">
+
+                <strong>Important:</strong>
+
+                <code>git init</code> sirf us local project par run karo
+                jise tum Git repository banana chahte ho.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- GITIGNORE -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>12. Step 4 — Create .gitignore</h2>
+
+            <p>
+
+                Git repository mein unnecessary ya sensitive files
+                push nahi karni chahiye.
+
+            </p>
+
+
+            <h3>Example .gitignore</h3>
+
+            <pre><code>
+.env
+.venv/
+__pycache__/
+node_modules/
+*.log
+.vscode/
+            </code></pre>
+
+
+            <div class="danger">
+
+                <strong>Never push:</strong>
+
+                <ul>
+
+                    <li>Passwords</li>
+                    <li>API keys</li>
+                    <li>Private SSH keys</li>
+                    <li>Cloud credentials</li>
+                    <li>Secret tokens</li>
+                    <li>Unnecessary large build files</li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- ADD -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>13. Step 5 — Add Files to Staging Area</h2>
+
+            <p>
+
+                All files stage karne ke liye:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git add .
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Specific file add karna ho:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git add README.md
+                </code>
+
+            </div>
+
+
+            <h3>Check Staged Files</h3>
+
+            <div class="terminal">
+
+                <code>
+git status
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- COMMIT -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>14. Step 6 — Create Commit</h2>
+
+            <div class="terminal">
+
+                <code>
+git commit -m "Initial commit"
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Commit local Git repository mein changes ka
+                snapshot create karta hai.
+
+            </p>
+
+
+            <h3>Good Commit Messages</h3>
+
+            <pre><code>
+git commit -m "Add GitLab SSH notes"
+
+git commit -m "Add Docker deployment workflow"
+
+git commit -m "Fix CI pipeline"
+
+git commit -m "Update README"
+            </code></pre>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- REMOTE -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>15. Step 7 — Add GitLab Remote</h2>
+
+            <p>
+
+                Local Git repository ko GitLab repository ke saath
+                connect karne ke liye remote add karte hain.
+
+            </p>
+
+
+            <h3>SSH Method</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote add origin git@gitlab.com:USERNAME/PROJECT.git
+                </code>
+
+            </div>
+
+
+            <h3>Example</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote add origin git@gitlab.com:pavan/terraform-aws.git
+                </code>
+
+            </div>
+
+
+            <h3>Check Remote</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Expected pattern:
+
+            </p>
+
+            <pre><code>
+origin  git@gitlab.com:USERNAME/PROJECT.git (fetch)
+origin  git@gitlab.com:USERNAME/PROJECT.git (push)
+            </code></pre>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- BRANCH -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>16. Step 8 — Set Main Branch</h2>
+
+            <p>
+
+                Agar tum main branch use karna chahte ho:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git branch -M main
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Current branch check:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git branch
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- SSH PUSH -->
+        <!-- ====================================================== -->
+
+        <section id="ssh">
+
+            <h2>17. Step 9 — Push Code Using SSH</h2>
+
+            <p>
+
+                Agar GitLab SSH key configured hai:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git push -u origin main
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Yahan:
+
+            </p>
+
+            <ul>
+
+                <li><strong>git push</strong> = Local commits ko remote repository par bhejna.</li>
+
+                <li><strong>-u</strong> = Upstream tracking set karna.</li>
+
+                <li><strong>origin</strong> = Remote repository ka common name.</li>
+
+                <li><strong>main</strong> = Push ki ja rahi branch.</li>
+
+            </ul>
+
+
+            <div class="success">
+
+                First successful push ke baad future mein configured
+                branch par aksar simple:
+
+                <br><br>
+
+                <code>git push</code>
+
+                <br><br>
+
+                use kiya ja sakta hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- HTTPS -->
+        <!-- ====================================================== -->
+
+        <section id="https">
+
+            <h2>18. Push Code Using HTTPS</h2>
+
+            <p>
+
+                Agar repository HTTPS remote use kar rahi hai:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git remote add origin https://gitlab.com/USERNAME/PROJECT.git
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Authentication ke liye GitLab ki supported credential/token
+                mechanism use karni hoti hai; normal account password
+                ko Git over HTTPS authentication ke liye assume nahi karna chahiye.
+
+            </p>
+
+
+            <h3>Verify Remote</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- COMPLETE COMMAND -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>19. Complete First-Time Push Command Sequence</h2>
+
+            <p>
+
+                Agar local folder mein existing code hai aur
+                GitLab par new remote repository create ki hai:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+cd your-project
+
+git init
+
+git add .
+
+git commit -m "Initial commit"
+
+git branch -M main
+
+git remote add origin git@gitlab.com:USERNAME/PROJECT.git
+
+git push -u origin main
+                </code>
+
+            </div>
+
+
+            <div class="note">
+
+                Ye commands tab use karo jab local folder ko
+                first time GitLab remote repository ke saath connect
+                karna ho.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- EXISTING -->
+        <!-- ====================================================== -->
+
+        <section id="existing">
+
+            <h2>20. Existing Git Project ko GitLab par Push Karna</h2>
+
+            <p>
+
+                Agar local project already Git repository hai,
+                to <code>git init</code> dobara karna generally necessary nahi hai.
+
+            </p>
+
+
+            <h3>Check</h3>
+
+            <div class="terminal">
+
+                <code>
+git status
+                </code>
+
+            </div>
+
+
+            <h3>Check Existing Remote</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Agar GitHub remote already configured hai aur
+                tum GitLab ko remote add karna chahte ho:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git remote add gitlab git@gitlab.com:USERNAME/PROJECT.git
+                </code>
+
+            </div>
+
+
+            <h3>Push to GitLab</h3>
+
+            <div class="terminal">
+
+                <code>
+git push -u gitlab main
+                </code>
+
+            </div>
+
+
+            <div class="info">
+
+                Is approach se ek local repository ke multiple
+                remote repositories ho sakte hain.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- MULTIPLE REMOTES -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>21. Multiple Remotes — GitHub + GitLab</h2>
+
+            <p>
+
+                Ek local Git repository ko GitHub aur GitLab dono
+                ke remote repositories ke saath connect kiya ja sakta hai.
+
+            </p>
+
+
+            <h3>Example</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote add origin git@github.com:USERNAME/PROJECT.git
+
+git remote add gitlab git@gitlab.com:USERNAME/PROJECT.git
+                </code>
+
+            </div>
+
+
+            <h3>Check</h3>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <h3>Push to GitHub</h3>
+
+            <div class="terminal">
+
+                <code>
+git push origin main
+                </code>
+
+            </div>
+
+
+            <h3>Push to GitLab</h3>
+
+            <div class="terminal">
+
+                <code>
+git push gitlab main
+                </code>
+
+            </div>
+
+
+            <div class="warning">
+
+                Multiple remotes use karte waqt carefully check karo
+                ki kis remote par push kar rahe ho.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- MULTIPLE PROJECT LOCAL -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>22. Multiple Local Projects ka Workflow</h2>
+
+            <p>
+
+                Agar tum VS Code mein different projects par
+                separately work karte ho, to har project ka
+                separate local Git repository aur remote ho sakta hai.
+
+            </p>
+
+
+            <div class="diagram">
+
+Computer
+│
+├── project-one
+│   ├── .git
+│   └── GitLab Project One
+│
+├── project-two
+│   ├── .git
+│   └── GitLab Project Two
+│
+├── project-three
+│   ├── .git
+│   └── GitLab Project Three
+│
+└── project-four
+    ├── .git
+    └── GitLab Project Four
+
+            </div>
+
+
+            <h3>Project One</h3>
+
+            <div class="terminal">
+
+                <code>
+cd project-one
+
+git status
+
+git add .
+
+git commit -m "Update project one"
+
+git push
+                </code>
+
+            </div>
+
+
+            <h3>Project Two</h3>
+
+            <div class="terminal">
+
+                <code>
+cd ../project-two
+
+git status
+
+git add .
+
+git commit -m "Update project two"
+
+git push
+                </code>
+
+            </div>
+
+
+            <div class="success">
+
+                <strong>Important:</strong>
+
+                Har project ka apna <code>.git</code> folder aur
+                apna remote configuration ho sakta hai.
+
+                Isliye project change karte waqt pehle
+                <code>git remote -v</code> aur
+                <code>git status</code> check karna good habit hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- WORKFLOW -->
+        <!-- ====================================================== -->
+
+        <section id="workflow">
+
+            <h2>23. Complete GitLab Push Workflow</h2>
+
+
+            <div class="workflow">
+
+                <div class="step">Create Project</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Open Local Folder</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git init</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git add</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git commit</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git remote</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git push</div>
+
+            </div>
+
+
+            <pre><code>
+LOCAL COMPUTER
+      |
+      | Git
+      v
+LOCAL REPOSITORY
+      |
+      | git push
+      v
+GITLAB PROJECT
+      |
+      +----------------------+
+      |                      |
+      v                      v
+   Issues              CI/CD Pipeline
+                             |
+                             v
+                         Build/Test
+                             |
+                             v
+                         Deployment
+            </code></pre>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- ERRORS -->
+        <!-- ====================================================== -->
+
+        <section id="errors">
+
+            <h2>24. Common GitLab Push Errors</h2>
+
+
+            <h3>Error 1 — Permission denied (publickey)</h3>
+
+            <pre><code>git@gitlab.com: Permission denied (publickey).</code></pre>
+
+
+            <p>Possible reasons:</p>
+
+            <ul>
+
+                <li>SSH key GitLab mein add nahi hai.</li>
+
+                <li>SSH agent mein key loaded nahi hai.</li>
+
+                <li>Wrong SSH key use ho rahi hai.</li>
+
+                <li>Remote URL incorrect hai.</li>
+
+            </ul>
+
+
+            <p>Test:</p>
+
+            <div class="terminal">
+
+                <code>
+ssh -T git@gitlab.com
+                </code>
+
+            </div>
+
+
+            <h3>Error 2 — Remote already exists</h3>
+
+            <pre><code>error: remote origin already exists.</code></pre>
+
+
+            <p>Check:</p>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <p>Remote URL change:</p>
+
+            <div class="terminal">
+
+                <code>
+git remote set-url origin git@gitlab.com:USERNAME/PROJECT.git
+                </code>
+
+            </div>
+
+
+            <h3>Error 3 — Rejected Push</h3>
+
+            <p>
+
+                Agar remote repository mein already commits hain
+                jo local repository mein nahi hain, push reject ho
+                sakta hai.
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git pull --rebase origin main
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Conflicts aaye to unhe resolve karke commit/rebase
+                complete karo aur phir push karo.
+
+            </p>
+
+
+            <h3>Error 4 — Wrong Repository</h3>
+
+            <p>
+
+                Push karne se pehle:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+git remote -v
+                </code>
+
+            </div>
+
+
+            <div class="danger">
+
+                <strong>Good Habit:</strong>
+
+                Push se pehle hamesha verify karo:
+
+                <br><br>
+
+                <code>git status</code>
+
+                <br>
+
+                <code>git remote -v</code>
+
+                <br>
+
+                <code>git branch --show-current</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- PULL -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>25. Push ke Baad Pull/FETCH</h2>
+
+            <p>
+
+                Remote repository se latest changes lene ke liye:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git pull
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Sirf remote changes download karke inspect karne ke liye:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git fetch
+                </code>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>Command</th>
+
+                        <th>Purpose</th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td><code>git push</code></td>
+
+                        <td>
+                            Local commits ko remote par bhejna
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td><code>git fetch</code></td>
+
+                        <td>
+                            Remote changes download karke local refs update karna
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td><code>git pull</code></td>
+
+                        <td>
+                            Fetch ke baad current branch ke changes integrate karna
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- SECURITY -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>26. GitLab Push Security Rules</h2>
+
+            <div class="danger">
+
+                <h3>Never Push Secrets</h3>
+
+                <ul>
+
+                    <li>AWS Access Keys</li>
+
+                    <li>Cloud credentials</li>
+
+                    <li>API keys</li>
+
+                    <li>Database passwords</li>
+
+                    <li>SSH private keys</li>
+
+                    <li>JWT secrets</li>
+
+                    <li>.env files containing secrets</li>
+
+                </ul>
+
+            </div>
+
+
+            <h3>Use .gitignore</h3>
+
+            <pre><code>
+.env
+*.pem
+*.key
+.venv/
+node_modules/
+__pycache__/
+            </code></pre>
+
+
+            <div class="note">
+
+                <strong>Important:</strong>
+
+                Sirf .gitignore add karna already committed secret ko
+                automatically repository history se remove nahi karta.
+                Agar secret accidentally commit ho gaya hai, credential
+                ko immediately rotate/revoke karna aur history cleanup
+                separately handle karna chahiye.
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- PRACTICAL PROJECT -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>27. Practical DevOps Project</h2>
+
+            <h3>Project: Multi-Project GitLab DevOps Portfolio</h3>
+
+            <p>
+
+                GitLab par ek Group create karo:
+
+            </p>
+
+            <pre><code>DevOps-Learning</code></pre>
+
+
+            <p>
+
+                Uske andar ye projects create karo:
+
+            </p>
+
+            <pre><code>
+DevOps-Learning
+│
+├── linux-practice
+├── git-practice
+├── gitlab-practice
+├── docker-project
+├── kubernetes-project
+├── terraform-project
+├── python-devops
+└── ci-cd-project
+            </code></pre>
+
+
+            <h3>Har Project mein Maintain Karo</h3>
+
+            <ul>
+
+                <li>README.md</li>
+
+                <li>Source code</li>
+
+                <li>Architecture diagram</li>
+
+                <li>Setup instructions</li>
+
+                <li>Commands</li>
+
+                <li>Screenshots</li>
+
+                <li>CI/CD configuration</li>
+
+                <li>Lessons learned</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- ASSIGNMENT -->
+        <!-- ====================================================== -->
+
+        <section id="assignment">
+
+            <h2>28. Practical Assignment</h2>
+
+            <h3>Assignment 1 — Group</h3>
+
+            <ol>
+
+                <li>GitLab mein ek Group create karo.</li>
+
+                <li>Group ka naam DevOps-Learning rakho.</li>
+
+                <li>Group visibility ko apni requirement ke according set karo.</li>
+
+            </ol>
+
+
+            <h3>Assignment 2 — Multiple Projects</h3>
+
+            <ol>
+
+                <li>Group ke andar minimum 3 projects create karo.</li>
+
+                <li>GitLab-Notes project banao.</li>
+
+                <li>Docker-Learning project banao.</li>
+
+                <li>Python-DevOps project banao.</li>
+
+            </ol>
+
+
+            <h3>Assignment 3 — Push Code</h3>
+
+            <ol>
+
+                <li>Local folder create karo.</li>
+
+                <li>Git initialize karo.</li>
+
+                <li>README.md create karo.</li>
+
+                <li>.gitignore create karo.</li>
+
+                <li>git add . run karo.</li>
+
+                <li>Initial commit create karo.</li>
+
+                <li>GitLab remote add karo.</li>
+
+                <li>Main branch set karo.</li>
+
+                <li>SSH se push karo.</li>
+
+                <li>GitLab website par verify karo.</li>
+
+            </ol>
+
+
+            <h3>Assignment Commands</h3>
+
+            <div class="terminal">
+
+                <code>
+mkdir gitlab-practice
+
+cd gitlab-practice
+
+git init
+
+echo "# GitLab Practice" > README.md
+
+git add .
+
+git commit -m "Initial commit"
+
+git branch -M main
+
+git remote add origin git@gitlab.com:USERNAME/gitlab-practice.git
+
+git push -u origin main
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- INTERVIEW -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>29. GitLab Interview Questions</h2>
+
+            <ol>
+
+                <li>What is a GitLab Group?</li>
+
+                <li>Why are GitLab Groups used?</li>
+
+                <li>What is a GitLab Subgroup?</li>
+
+                <li>What is a GitLab Project?</li>
+
+                <li>What is the difference between Group and Project?</li>
+
+                <li>Can a GitLab Group contain multiple projects?</li>
+
+                <li>Why would an organization use multiple projects?</li>
+
+                <li>How do you push a local project to GitLab?</li>
+
+                <li>What is git init?</li>
+
+                <li>What is git add?</li>
+
+                <li>What is git commit?</li>
+
+                <li>What is git remote?</li>
+
+                <li>What is origin?</li>
+
+                <li>What does git push -u origin main mean?</li>
+
+                <li>How do you check a Git remote?</li>
+
+                <li>How do you change an existing remote URL?</li>
+
+                <li>How can one local repository have multiple remotes?</li>
+
+                <li>What is the difference between git push, git pull and git fetch?</li>
+
+                <li>What should you do if you accidentally commit a secret?</li>
+
+                <li>How do SSH keys help with GitLab authentication?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- ====================================================== -->
+        <!-- CHEAT SHEET -->
+        <!-- ====================================================== -->
+
+        <section>
+
+            <h2>30. GitLab Groups + Projects + Push Cheat Sheet</h2>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Group</h3>
+
+                    <p>
+                        Projects ko organize karne ka container.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Subgroup</h3>
+
+                    <p>
+                        Group ke andar further organization.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Project</h3>
+
+                    <p>
+                        Code repository aur development workspace.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Remote</h3>
+
+                    <p>
+                        Local repository ko remote GitLab repository se connect karta hai.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Push</h3>
+
+                    <p>
+                        Local commits ko GitLab repository par bhejna.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>SSH</h3>
+
+                    <p>
+                        GitLab authentication ke liye secure key-based method.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h3>Most Important Commands</h3>
+
+            <pre><code>
+git status
+
+git add .
+
+git commit -m "message"
+
+git branch -M main
+
+git remote -v
+
+git remote add origin git@gitlab.com:USERNAME/PROJECT.git
+
+git push -u origin main
+
+git pull
+
+git fetch
+            </code></pre>
+
+
+            <div class="success">
+
+                <strong>Final Concept:</strong>
+
+                <br><br>
+
+                Group → Projects organize karta hai
+
+                <br>
+
+                Project → Repository + development workspace
+
+                <br>
+
+                Git → Local version control
+
+                <br>
+
+                Remote → Local aur GitLab repository ke beech connection
+
+                <br>
+
+                Push → Local commits ko GitLab par bhejna
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            GitLab Groups, Projects & Push Code — Complete Learning Notes
+        </p>
+
+        <p>
+            Git • GitLab • SSH • DevOps • CI/CD
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

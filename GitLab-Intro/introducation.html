@@ -1,0 +1,1218 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GitLab Complete Guide | DevOps Notes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 45px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 42px;
+            color: #fc6d26;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            max-width: 850px;
+            margin: auto;
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            display: inline-block;
+            color: #334155;
+            text-decoration: none;
+            margin: 5px 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #fc6d26;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        section {
+            background: #ffffff;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        h2 {
+            color: #fc6d26;
+            font-size: 30px;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #ffe1d3;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #334155;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+
+        h4 {
+            color: #475569;
+            margin-top: 18px;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 15px 25px;
+        }
+
+        li {
+            margin-bottom: 7px;
+        }
+
+        strong {
+            color: #111827;
+        }
+
+        /* CARDS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            padding: 22px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .card h3 {
+            color: #fc6d26;
+            margin-top: 0;
+        }
+
+        /* NOTE */
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #fc6d26;
+            padding: 16px;
+            margin: 18px 0;
+            border-radius: 6px;
+        }
+
+        .info {
+            background: #eff6ff;
+            border-left: 5px solid #3b82f6;
+            padding: 16px;
+            margin: 18px 0;
+            border-radius: 6px;
+        }
+
+        .success {
+            background: #f0fdf4;
+            border-left: 5px solid #22c55e;
+            padding: 16px;
+            margin: 18px 0;
+            border-radius: 6px;
+        }
+
+        /* CODE */
+        pre {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            overflow-x: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: Consolas, Monaco, monospace;
+            color: #0f172a;
+        }
+
+        /* TABLE */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 750px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dbe2ea;
+            padding: 13px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #fff1eb;
+            color: #9a3412;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* WORKFLOW */
+        .workflow {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .step {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .arrow {
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            color: #94a3b8;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        @media (max-width: 700px) {
+            header h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>GitLab Complete Guide</h1>
+    <p>
+        Complete beginner-to-intermediate learning notes for GitLab,
+        GitLab vs GitHub, account creation, repositories, GitLab CI/CD,
+        DevOps workflow, security and important concepts.
+    </p>
+</header>
+
+<nav>
+    <a href="#intro">Introduction</a>
+    <a href="#architecture">How GitLab Works</a>
+    <a href="#features">Features</a>
+    <a href="#github">GitLab vs GitHub</a>
+    <a href="#account">Account</a>
+    <a href="#repo">Repository</a>
+    <a href="#git">Git Commands</a>
+    <a href="#cicd">CI/CD</a>
+    <a href="#devops">DevOps</a>
+    <a href="#security">Security</a>
+    <a href="#interview">Interview</a>
+</nav>
+
+<div class="container">
+
+    <!-- INTRODUCTION -->
+    <section id="intro">
+
+        <h2>1. What is GitLab?</h2>
+
+        <p>
+            <strong>GitLab</strong> is a DevSecOps and software development
+            platform that provides tools for source code management,
+            collaboration, CI/CD, security, project management and
+            software delivery.
+        </p>
+
+        <p>
+            GitLab is built around <strong>Git</strong>, which is a
+            distributed version control system. GitLab provides a web-based
+            platform where developers can store Git repositories,
+            collaborate with team members and automate software delivery.
+        </p>
+
+        <div class="note">
+            <strong>Simple Definition:</strong>
+            Git is the version control system, while GitLab is a platform
+            that provides Git repository hosting plus collaboration,
+            CI/CD, security and DevOps capabilities.
+        </div>
+
+        <h3>GitLab ka main purpose kya hai?</h3>
+
+        <ul>
+            <li>Source code ko store karna</li>
+            <li>Code ka version history maintain karna</li>
+            <li>Developers ke beech collaboration karna</li>
+            <li>Issues aur tasks manage karna</li>
+            <li>Code review karna</li>
+            <li>CI/CD pipelines automate karna</li>
+            <li>Applications ko build, test aur deploy karna</li>
+            <li>Security scanning automate karna</li>
+            <li>DevOps lifecycle ko single platform par manage karna</li>
+        </ul>
+
+        <h3>GitLab vs Git</h3>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Git</h3>
+                <p>
+                    Git ek distributed version control system hai.
+                    Iska primary purpose source code ke versions
+                    ko track karna hai.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>GitLab</h3>
+                <p>
+                    GitLab ek complete DevOps platform hai jo Git
+                    repositories ke saath CI/CD, security,
+                    collaboration aur project management provide karta hai.
+                </p>
+            </div>
+
+        </div>
+
+        <h3>GitLab ka Real-Life Example</h3>
+
+        <p>
+            Imagine karo 5 developers ek web application par kaam kar
+            rahe hain. Agar sab developers directly ek hi code copy ko
+            modify karein, to conflicts aur mistakes ho sakti hain.
+        </p>
+
+        <p>
+            GitLab repository ke through developers branches bana sakte
+            hain, changes commit kar sakte hain, Merge Requests create
+            kar sakte hain aur code review ke baad changes ko main branch
+            mein merge kar sakte hain.
+        </p>
+
+    </section>
+
+
+    <!-- HOW GITLAB WORKS -->
+    <section id="architecture">
+
+        <h2>2. How GitLab Works?</h2>
+
+        <p>
+            GitLab ka basic workflow Git repository, branches, commits,
+            Merge Requests aur CI/CD pipeline ke around kaam karta hai.
+        </p>
+
+        <div class="workflow">
+
+            <div class="step">Developer</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Git Clone</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Create Branch</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Code</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Commit</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Push</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Merge Request</div>
+            <div class="arrow">→</div>
+
+            <div class="step">CI/CD</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Deploy</div>
+
+        </div>
+
+        <h3>Important Components</h3>
+
+        <ul>
+            <li><strong>Repository:</strong> Project ka Git-based code storage.</li>
+            <li><strong>Commit:</strong> Code changes ka snapshot.</li>
+            <li><strong>Branch:</strong> Independent development line.</li>
+            <li><strong>Merge Request:</strong> Changes ko review aur merge karne ka mechanism.</li>
+            <li><strong>Issue:</strong> Bug, task ya feature track karne ke liye.</li>
+            <li><strong>Pipeline:</strong> Automated CI/CD workflow.</li>
+            <li><strong>Runner:</strong> Jobs execute karne wala environment.</li>
+            <li><strong>Registry:</strong> Container images/package artifacts store karne ke liye.</li>
+        </ul>
+
+    </section>
+
+
+    <!-- FEATURES -->
+    <section id="features">
+
+        <h2>3. GitLab ke Important Features</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Git Repository</h3>
+                <p>Source code ko Git repository mein manage kar sakte ho.</p>
+            </div>
+
+            <div class="card">
+                <h3>Branches</h3>
+                <p>Different features aur experiments ko isolated branches mein develop kar sakte ho.</p>
+            </div>
+
+            <div class="card">
+                <h3>Merge Requests</h3>
+                <p>Code review aur branch merging ke liye use hota hai.</p>
+            </div>
+
+            <div class="card">
+                <h3>Issues</h3>
+                <p>Tasks, bugs aur feature requests track kar sakte ho.</p>
+            </div>
+
+            <div class="card">
+                <h3>GitLab CI/CD</h3>
+                <p>Build, test aur deployment automate karne ke liye.</p>
+            </div>
+
+            <div class="card">
+                <h3>Container Registry</h3>
+                <p>Docker/OCI container images store aur manage karne ke liye.</p>
+            </div>
+
+            <div class="card">
+                <h3>Security</h3>
+                <p>Application aur dependency security workflows integrate kiye ja sakte hain.</p>
+            </div>
+
+            <div class="card">
+                <h3>Project Management</h3>
+                <p>Issues, boards, milestones aur planning tools.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- GITLAB VS GITHUB -->
+    <section id="github">
+
+        <h2>4. GitLab vs GitHub — Detailed Comparison</h2>
+
+        <p>
+            GitLab aur GitHub dono Git-based development platforms hain.
+            Dono repositories, collaboration, code review aur automation
+            capabilities provide karte hain, lekin unke product
+            approaches aur workflows mein differences hain.
+        </p>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>GitLab</th>
+                        <th>GitHub</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Core Technology</td>
+                        <td>Git-based platform</td>
+                        <td>Git-based platform</td>
+                    </tr>
+
+                    <tr>
+                        <td>Repository Hosting</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+
+                    <tr>
+                        <td>Code Review</td>
+                        <td>Merge Requests</td>
+                        <td>Pull Requests</td>
+                    </tr>
+
+                    <tr>
+                        <td>CI/CD</td>
+                        <td>GitLab CI/CD</td>
+                        <td>GitHub Actions</td>
+                    </tr>
+
+                    <tr>
+                        <td>Automation Configuration</td>
+                        <td>.gitlab-ci.yml</td>
+                        <td>.github/workflows/*.yml</td>
+                    </tr>
+
+                    <tr>
+                        <td>CI/CD Execution</td>
+                        <td>GitLab Runner</td>
+                        <td>GitHub-hosted/self-hosted runners</td>
+                    </tr>
+
+                    <tr>
+                        <td>Container Registry</td>
+                        <td>Available</td>
+                        <td>GitHub Container Registry</td>
+                    </tr>
+
+                    <tr>
+                        <td>Package Registry</td>
+                        <td>Available</td>
+                        <td>GitHub Packages</td>
+                    </tr>
+
+                    <tr>
+                        <td>Issue Tracking</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+
+                    <tr>
+                        <td>Project Management</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                    </tr>
+
+                    <tr>
+                        <td>Security Features</td>
+                        <td>Integrated DevSecOps capabilities</td>
+                        <td>Integrated security capabilities</td>
+                    </tr>
+
+                    <tr>
+                        <td>Open Source Edition</td>
+                        <td>GitLab Community Edition / open-source GitLab project</td>
+                        <td>GitHub.com is proprietary</td>
+                    </tr>
+
+                    <tr>
+                        <td>Self-Hosted Option</td>
+                        <td>GitLab Self-Managed</td>
+                        <td>GitHub Enterprise Server</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <h3>GitHub Pull Request vs GitLab Merge Request</h3>
+
+        <p>
+            GitHub mein code review aur branch integration ke liye
+            <strong>Pull Request (PR)</strong> use hota hai.
+        </p>
+
+        <p>
+            GitLab mein similar workflow ko
+            <strong>Merge Request (MR)</strong> kaha jata hai.
+        </p>
+
+        <div class="info">
+            Conceptually dono ka purpose similar hai:
+            developers changes submit karte hain, reviewers code check
+            karte hain aur approval ke baad changes target branch mein
+            merge kiye ja sakte hain.
+        </div>
+
+        <h3>GitHub Actions vs GitLab CI/CD</h3>
+
+        <p>
+            GitHub automation ke liye primarily <strong>GitHub Actions</strong>
+            provide karta hai, jabki GitLab mein
+            <strong>GitLab CI/CD</strong> platform ke saath integrated hai.
+        </p>
+
+    </section>
+
+
+    <!-- ACCOUNT -->
+    <section id="account">
+
+        <h2>5. How to Create a GitLab Account?</h2>
+
+        <h3>Step 1 — GitLab Website Open Karo</h3>
+
+        <p>
+            GitLab ki official website open karo:
+        </p>
+
+        <p>
+            <strong>https://gitlab.com</strong>
+        </p>
+
+        <h3>Step 2 — Sign Up</h3>
+
+        <ol>
+            <li>GitLab website open karo.</li>
+            <li>Sign Up option select karo.</li>
+            <li>Email address enter karo.</li>
+            <li>Password create karo.</li>
+            <li>Required account information provide karo.</li>
+            <li>Email verification complete karo.</li>
+            <li>Account setup complete karo.</li>
+        </ol>
+
+        <div class="note">
+            GitLab ke free aur paid offerings time ke saath change ho sakte hain.
+            Account create karte waqt current plan limits aur features
+            GitLab ki official pricing documentation par verify karna chahiye.
+        </div>
+
+        <h3>Username Carefully Choose Karo</h3>
+
+        <p>
+            Professional username choose karna better hai kyunki tumhara
+            GitLab profile URL aur identity projects mein visible ho sakta hai.
+        </p>
+
+        <h3>Profile Complete Karo</h3>
+
+        <ul>
+            <li>Profile photo</li>
+            <li>Professional name</li>
+            <li>Bio</li>
+            <li>Skills</li>
+            <li>Location (optional)</li>
+            <li>LinkedIn profile (optional)</li>
+            <li>Portfolio website (optional)</li>
+        </ul>
+
+    </section>
+
+
+    <!-- REPOSITORY -->
+    <section id="repo">
+
+        <h2>6. GitLab Repository Create Karna</h2>
+
+        <ol>
+            <li>GitLab login karo.</li>
+            <li>New Project option select karo.</li>
+            <li>Project name enter karo.</li>
+            <li>Project visibility choose karo.</li>
+            <li>README add kar sakte ho.</li>
+            <li>Create Project par click karo.</li>
+        </ol>
+
+        <h3>Visibility Options</h3>
+
+        <ul>
+            <li><strong>Private:</strong> Access restricted hota hai.</li>
+            <li><strong>Public:</strong> Project publicly accessible hota hai.</li>
+            <li><strong>Internal:</strong> Available depending on GitLab deployment/account context.</li>
+        </ul>
+
+        <h3>Local Project ko GitLab par Push Karna</h3>
+
+        <pre><code>git init
+
+git add .
+
+git commit -m "Initial commit"
+
+git branch -M main
+
+git remote add origin YOUR_GITLAB_REPOSITORY_URL
+
+git push -u origin main</code></pre>
+
+        <h3>Remote Check Karna</h3>
+
+        <pre><code>git remote -v</code></pre>
+
+        <h3>GitLab se Repository Clone Karna</h3>
+
+        <pre><code>git clone YOUR_GITLAB_REPOSITORY_URL</code></pre>
+
+    </section>
+
+
+    <!-- GIT COMMANDS -->
+    <section id="git">
+
+        <h2>7. Important Git Commands for GitLab</h2>
+
+        <pre><code># Repository initialize
+git init
+
+# Check status
+git status
+
+# Add files
+git add .
+
+# Commit
+git commit -m "message"
+
+# Check branches
+git branch
+
+# Create branch
+git branch feature-login
+
+# Switch branch
+git switch feature-login
+
+# Push branch
+git push -u origin feature-login
+
+# Pull latest changes
+git pull
+
+# Fetch changes
+git fetch
+
+# View remote
+git remote -v
+
+# Clone repository
+git clone URL</code></pre>
+
+    </section>
+
+
+    <!-- CICD -->
+    <section id="cicd">
+
+        <h2>8. GitLab CI/CD</h2>
+
+        <p>
+            GitLab CI/CD GitLab ka important DevOps feature hai jo
+            application ke build, test aur deployment processes ko
+            automate kar sakta hai.
+        </p>
+
+        <h3>Basic CI/CD Flow</h3>
+
+        <div class="workflow">
+
+            <div class="step">Code Push</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Pipeline</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Build</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Test</div>
+            <div class="arrow">→</div>
+
+            <div class="step">Deploy</div>
+
+        </div>
+
+        <h3>.gitlab-ci.yml</h3>
+
+        <p>
+            GitLab CI/CD pipeline configuration normally
+            <strong>.gitlab-ci.yml</strong> file mein define ki ja sakti hai.
+        </p>
+
+        <pre><code>stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - echo "Building application"
+
+test:
+  stage: test
+  script:
+    - echo "Running tests"</code></pre>
+
+        <h3>GitLab Runner</h3>
+
+        <p>
+            Runner woh execution environment hai jo CI/CD jobs ko run karta hai.
+            Runner GitLab pipeline ke jobs ko execute karne ke liye use hota hai.
+        </p>
+
+    </section>
+
+
+    <!-- DEVOPS -->
+    <section id="devops">
+
+        <h2>9. GitLab in DevOps</h2>
+
+        <p>
+            DevOps engineer ke liye GitLab ka knowledge important ho sakta hai
+            kyunki GitLab source control se lekar CI/CD aur security workflows
+            tak multiple DevOps activities support karta hai.
+        </p>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Source Control</h3>
+                <p>Git repositories aur branches manage karna.</p>
+            </div>
+
+            <div class="card">
+                <h3>CI</h3>
+                <p>Automatically build aur test applications.</p>
+            </div>
+
+            <div class="card">
+                <h3>CD</h3>
+                <p>Deployment process automate karna.</p>
+            </div>
+
+            <div class="card">
+                <h3>Containers</h3>
+                <p>Container images aur registry workflows.</p>
+            </div>
+
+            <div class="card">
+                <h3>Security</h3>
+                <p>Security checks ko development lifecycle mein integrate karna.</p>
+            </div>
+
+            <div class="card">
+                <h3>Infrastructure</h3>
+                <p>Automation tools ke saath infrastructure workflows integrate karna.</p>
+            </div>
+
+        </div>
+
+        <h3>DevOps Example</h3>
+
+        <pre><code>Developer
+    ↓
+GitLab Repository
+    ↓
+Merge Request
+    ↓
+CI Pipeline
+    ↓
+Build
+    ↓
+Test
+    ↓
+Security Checks
+    ↓
+Docker Image
+    ↓
+Container Registry
+    ↓
+Deployment
+    ↓
+Cloud / Kubernetes</code></pre>
+
+    </section>
+
+
+    <!-- SECURITY -->
+    <section id="security">
+
+        <h2>10. GitLab Security / DevSecOps</h2>
+
+        <p>
+            DevSecOps ka concept security ko software development lifecycle
+            ke early stages mein integrate karta hai.
+        </p>
+
+        <ul>
+            <li>Dependency security</li>
+            <li>Secret detection</li>
+            <li>Static analysis</li>
+            <li>Container security</li>
+            <li>Dynamic application security testing</li>
+            <li>Security reports</li>
+        </ul>
+
+        <div class="success">
+            <strong>DevOps Learner Tip:</strong>
+            GitLab CI/CD ke saath Docker, Kubernetes, Terraform, AWS,
+            Linux aur security scanning concepts practice karna
+            practical DevOps portfolio ke liye useful hai.
+        </div>
+
+    </section>
+
+
+    <!-- IMPORTANT TERMS -->
+    <section>
+
+        <h2>11. Important GitLab Terms</h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <tr>
+                    <th>Term</th>
+                    <th>Meaning</th>
+                </tr>
+
+                <tr>
+                    <td>Project</td>
+                    <td>GitLab mein software/project workspace.</td>
+                </tr>
+
+                <tr>
+                    <td>Repository</td>
+                    <td>Git-based source code storage.</td>
+                </tr>
+
+                <tr>
+                    <td>Commit</td>
+                    <td>Changes ka recorded snapshot.</td>
+                </tr>
+
+                <tr>
+                    <td>Branch</td>
+                    <td>Independent development line.</td>
+                </tr>
+
+                <tr>
+                    <td>Merge Request</td>
+                    <td>Code review aur merge workflow.</td>
+                </tr>
+
+                <tr>
+                    <td>Issue</td>
+                    <td>Bug, task ya feature tracking item.</td>
+                </tr>
+
+                <tr>
+                    <td>Pipeline</td>
+                    <td>Automated CI/CD workflow.</td>
+                </tr>
+
+                <tr>
+                    <td>Job</td>
+                    <td>Pipeline ke andar execute hone wala task.</td>
+                </tr>
+
+                <tr>
+                    <td>Runner</td>
+                    <td>CI/CD job execute karne wala environment.</td>
+                </tr>
+
+                <tr>
+                    <td>Registry</td>
+                    <td>Packages ya container images store karne ki service.</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- LEARNING ROADMAP -->
+    <section>
+
+        <h2>12. GitLab Learning Roadmap for DevOps</h2>
+
+        <ol>
+
+            <li>
+                <strong>Level 1 — Git Basics</strong>
+                <br>
+                init, clone, add, commit, push, pull, fetch, branch,
+                merge, rebase, reset, revert.
+            </li>
+
+            <li>
+                <strong>Level 2 — GitLab Basics</strong>
+                <br>
+                Account, profile, projects, repositories, visibility,
+                branches and settings.
+            </li>
+
+            <li>
+                <strong>Level 3 — Collaboration</strong>
+                <br>
+                Issues, Merge Requests, approvals, reviews and milestones.
+            </li>
+
+            <li>
+                <strong>Level 4 — GitLab CI/CD</strong>
+                <br>
+                .gitlab-ci.yml, stages, jobs, scripts, variables,
+                artifacts, cache and runners.
+            </li>
+
+            <li>
+                <strong>Level 5 — DevOps Integration</strong>
+                <br>
+                Docker, Kubernetes, Terraform, AWS, Linux and GitLab CI/CD.
+            </li>
+
+            <li>
+                <strong>Level 6 — DevSecOps</strong>
+                <br>
+                Security scanning, dependency scanning, secret detection
+                and container security concepts.
+            </li>
+
+        </ol>
+
+    </section>
+
+
+    <!-- PROJECT -->
+    <section>
+
+        <h2>13. GitLab DevOps Practice Project</h2>
+
+        <h3>Project: Automated Docker Deployment Pipeline</h3>
+
+        <p>
+            Ek simple web application banao aur usko GitLab repository
+            mein store karo. GitLab CI/CD ke through automatically
+            application build, test, Docker image create aur deployment
+            workflow practice karo.
+        </p>
+
+        <h3>Suggested Stack</h3>
+
+        <ul>
+            <li>Git</li>
+            <li>GitLab</li>
+            <li>GitLab CI/CD</li>
+            <li>Docker</li>
+            <li>Linux</li>
+            <li>AWS EC2</li>
+            <li>Terraform</li>
+            <li>Nginx</li>
+        </ul>
+
+        <h3>Target Workflow</h3>
+
+        <pre><code>Developer
+   ↓
+GitLab Repository
+   ↓
+Merge Request
+   ↓
+GitLab CI/CD
+   ↓
+Build
+   ↓
+Test
+   ↓
+Docker Build
+   ↓
+Container Registry
+   ↓
+AWS EC2
+   ↓
+Docker Container
+   ↓
+Live Application</code></pre>
+
+    </section>
+
+
+    <!-- INTERVIEW -->
+    <section id="interview">
+
+        <h2>14. GitLab Interview Questions</h2>
+
+        <ol>
+
+            <li>What is GitLab?</li>
+
+            <li>What is the difference between Git and GitLab?</li>
+
+            <li>What is the difference between GitLab and GitHub?</li>
+
+            <li>What is a GitLab project?</li>
+
+            <li>What is a GitLab repository?</li>
+
+            <li>What is a Merge Request?</li>
+
+            <li>What is the difference between Pull Request and Merge Request?</li>
+
+            <li>What is GitLab CI/CD?</li>
+
+            <li>What is .gitlab-ci.yml?</li>
+
+            <li>What is a GitLab Runner?</li>
+
+            <li>What are CI/CD stages?</li>
+
+            <li>What is an artifact?</li>
+
+            <li>What is caching in CI/CD?</li>
+
+            <li>What is GitLab Container Registry?</li>
+
+            <li>How do you push a local project to GitLab?</li>
+
+            <li>How do you create a branch in Git?</li>
+
+            <li>How do you merge a branch?</li>
+
+            <li>What is DevSecOps?</li>
+
+            <li>How can GitLab be used in a DevOps pipeline?</li>
+
+            <li>What is the role of a GitLab Runner?</li>
+
+        </ol>
+
+    </section>
+
+
+    <!-- QUICK REVISION -->
+    <section>
+
+        <h2>15. Quick Revision</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Git</h3>
+                <p>Version Control System</p>
+            </div>
+
+            <div class="card">
+                <h3>GitLab</h3>
+                <p>Git + Collaboration + CI/CD + DevSecOps Platform</p>
+            </div>
+
+            <div class="card">
+                <h3>GitHub</h3>
+                <p>Git-based developer collaboration platform with GitHub Actions and ecosystem integrations</p>
+            </div>
+
+            <div class="card">
+                <h3>MR</h3>
+                <p>Merge Request — GitLab code review workflow</p>
+            </div>
+
+            <div class="card">
+                <h3>CI/CD</h3>
+                <p>Build, test and deployment automation</p>
+            </div>
+
+            <div class="card">
+                <h3>Runner</h3>
+                <p>CI/CD jobs execute karne wala environment</p>
+            </div>
+
+        </div>
+
+        <div class="note">
+            <strong>DevOps Focus:</strong>
+            GitLab ko sirf GitHub ka alternative samajhkar mat padho.
+            DevOps perspective se GitLab Repository → Merge Request →
+            CI/CD → Runner → Docker → Registry → Deployment workflow
+            ko practically implement karna seekho.
+        </div>
+
+    </section>
+
+</div>
+
+<footer>
+    <p>GitLab Complete Learning Notes | DevOps Learning</p>
+    <p>Practice Git + GitLab + CI/CD + Docker + Cloud</p>
+</footer>
+
+</body>
+</html>
+```

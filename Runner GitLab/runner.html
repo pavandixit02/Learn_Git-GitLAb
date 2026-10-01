@@ -1,0 +1,2337 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GitLab Runners - Complete Detailed Guide</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #fc6d26;
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            max-width: 900px;
+            margin: auto;
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            display: inline-block;
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 5px 8px;
+        }
+
+        nav a:hover {
+            color: #fc6d26;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        h2 {
+            color: #fc6d26;
+            font-size: 29px;
+            border-bottom: 2px solid #ffe1d3;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #334155;
+            font-size: 21px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: #475569;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 18px 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #111827;
+        }
+
+        /* ================= CARDS ================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: #fc6d26;
+            margin-top: 0;
+        }
+
+        /* ================= NOTES ================= */
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #fc6d26;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .info {
+            background: #eff6ff;
+            border-left: 5px solid #3b82f6;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .success {
+            background: #f0fdf4;
+            border-left: 5px solid #22c55e;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .warning {
+            background: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .danger {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        /* ================= CODE ================= */
+
+        pre {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 8px;
+            padding: 18px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: Consolas, Monaco, monospace;
+            color: #0f172a;
+        }
+
+        .terminal {
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        .terminal code {
+            color: #e5e7eb;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dbe2ea;
+            padding: 13px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #fff1eb;
+            color: #9a3412;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* ================= WORKFLOW ================= */
+
+        .workflow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .step {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 23px;
+            color: #94a3b8;
+        }
+
+        /* ================= DIAGRAM ================= */
+
+        .diagram {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .arrow {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================================= -->
+    <!-- HEADER -->
+    <!-- ========================================================= -->
+
+    <header>
+
+        <h1>GitLab Runners - Complete Guide</h1>
+
+        <p>
+            Detailed beginner-to-intermediate notes about GitLab Runner,
+            runner architecture, runner types, Shared Runners,
+            Group Runners, Project-specific Runners, executors,
+            registration, CI/CD workflow, security and troubleshooting.
+        </p>
+
+    </header>
+
+
+    <!-- ========================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ========================================================= -->
+
+    <nav>
+
+        <a href="#intro">Introduction</a>
+        <a href="#why">Why Runner?</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#types">Runner Types</a>
+        <a href="#shared">Shared</a>
+        <a href="#group">Group</a>
+        <a href="#specific">Specific</a>
+        <a href="#scope">Scope</a>
+        <a href="#executor">Executors</a>
+        <a href="#register">Registration</a>
+        <a href="#yaml">CI YAML</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#security">Security</a>
+        <a href="#troubleshoot">Troubleshooting</a>
+        <a href="#assignment">Assignment</a>
+        <a href="#interview">Interview</a>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <!-- ========================================================= -->
+        <!-- 1. INTRODUCTION -->
+        <!-- ========================================================= -->
+
+        <section id="intro">
+
+            <h2>1. What is GitLab Runner?</h2>
+
+            <p>
+
+                <strong>GitLab Runner</strong> ek application hai jo
+                GitLab CI/CD pipeline ke jobs ko execute karta hai.
+
+            </p>
+
+            <p>
+
+                Simple words mein:
+
+                <strong>
+                    GitLab pipeline batati hai ki kya kaam karna hai,
+                    aur Runner us kaam ko execute karta hai.
+                </strong>
+
+            </p>
+
+
+            <div class="note">
+
+                <strong>Real-Life Analogy:</strong>
+
+                <br><br>
+
+                GitLab = Manager
+
+                <br>
+
+                CI/CD Pipeline = Task List
+
+                <br>
+
+                Runner = Worker
+
+                <br>
+
+                Job = Worker ko diya gaya task
+
+                <br><br>
+
+                Manager task deta hai → Worker task execute karta hai.
+
+            </div>
+
+
+            <h3>Runner kya execute kar sakta hai?</h3>
+
+            <ul>
+
+                <li>Application build</li>
+
+                <li>Unit tests</li>
+
+                <li>Linting</li>
+
+                <li>Security checks</li>
+
+                <li>Docker commands</li>
+
+                <li>Package creation</li>
+
+                <li>Deployment scripts</li>
+
+                <li>Infrastructure automation</li>
+
+            </ul>
+
+
+            <div class="success">
+
+                <strong>Important:</strong>
+
+                GitLab khud pipeline configuration aur orchestration
+                provide karta hai, jabki Runner jobs ko execution
+                environment mein run karta hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 2. WHY RUNNER -->
+        <!-- ========================================================= -->
+
+        <section id="why">
+
+            <h2>2. GitLab Runner ki Need Kyu Hoti Hai?</h2>
+
+            <p>
+
+                GitLab CI/CD mein jobs execute karne ke liye execution
+                environment ki zarurat hoti hai. Runner is role ko
+                fulfill karta hai.
+
+            </p>
+
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Build</h3>
+
+                    <p>
+                        Application ko compile/build karna.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Test</h3>
+
+                    <p>
+                        Automated tests execute karna.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Docker</h3>
+
+                    <p>
+                        Container image build aur related commands run karna.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Deploy</h3>
+
+                    <p>
+                        Deployment scripts execute karna.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 3. ARCHITECTURE -->
+        <!-- ========================================================= -->
+
+        <section id="architecture">
+
+            <h2>3. GitLab Runner Architecture</h2>
+
+            <p>
+
+                GitLab CI/CD pipeline mein GitLab aur Runner ke beech
+                job execution relationship hota hai.
+
+            </p>
+
+
+            <div class="diagram">
+
+Developer
+    |
+    | git push
+    v
+GitLab Repository
+    |
+    v
+.gitlab-ci.yml
+    |
+    v
+Pipeline
+    |
+    v
+Job Queue
+    |
+    v
+GitLab Runner
+    |
+    v
+Executor
+    |
+    v
+Build / Test / Deploy
+
+            </div>
+
+
+            <h3>Components</h3>
+
+            <ul>
+
+                <li>
+                    <strong>GitLab:</strong>
+                    Repository aur CI/CD orchestration platform.
+                </li>
+
+                <li>
+                    <strong>Pipeline:</strong>
+                    Automated workflow.
+                </li>
+
+                <li>
+                    <strong>Job:</strong>
+                    Pipeline ka individual task.
+                </li>
+
+                <li>
+                    <strong>Runner:</strong>
+                    Job execute karne wala agent/application.
+                </li>
+
+                <li>
+                    <strong>Executor:</strong>
+                    Wo mechanism/environment jisme job actually execute hoti hai.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 4. RUNNER TYPES -->
+        <!-- ========================================================= -->
+
+        <section id="types">
+
+            <h2>4. GitLab Runner ke Types</h2>
+
+            <p>
+
+                GitLab mein Runner ko samajhne ke liye
+                <strong>scope</strong> ke basis par teen important
+                categories samajhna useful hai:
+
+            </p>
+
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Shared / Instance Runner</h3>
+
+                    <p>
+                        Broad scope par available Runner.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Group Runner</h3>
+
+                    <p>
+                        Group aur uske eligible projects ke liye.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Project-specific Runner</h3>
+
+                    <p>
+                        Specific project ke jobs ke liye.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="warning">
+
+                <strong>Important Terminology:</strong>
+
+                GitLab ke versions aur product terminology ke
+                according "shared", "instance", "group" aur
+                "project-specific" runner terminology/settings
+                change ho sakti hain. Current GitLab UI mein
+                exact labels apne GitLab version/plan ke according
+                check karo.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 5. SHARED RUNNER -->
+        <!-- ========================================================= -->
+
+        <section id="shared">
+
+            <h2>5. Shared / Instance Runner</h2>
+
+            <p>
+
+                Shared/instance-level Runner aisa Runner hota hai
+                jo organization/instance level par multiple eligible
+                projects ke jobs ko execute kar sakta hai, subject to
+                configuration, permissions and runner availability.
+
+            </p>
+
+
+            <h3>Simple Example</h3>
+
+            <div class="diagram">
+
+GitLab Instance
+│
+├── Project A
+│
+├── Project B
+│
+├── Project C
+│
+└── Shared / Instance Runner
+        │
+        ├── Job A
+        ├── Job B
+        └── Job C
+
+            </div>
+
+
+            <h3>Use Case</h3>
+
+            <p>
+
+                Agar organization ke bahut saare normal CI jobs hain
+                aur ek common execution environment use karna hai,
+                to shared/instance runner useful ho sakta hai.
+
+            </p>
+
+
+            <h3>Advantages</h3>
+
+            <ul>
+
+                <li>Multiple projects ko serve kar sakta hai.</li>
+
+                <li>Centralized runner management possible.</li>
+
+                <li>Common workloads ke liye useful.</li>
+
+                <li>Runner infrastructure reuse ki ja sakti hai.</li>
+
+            </ul>
+
+
+            <h3>Considerations</h3>
+
+            <ul>
+
+                <li>Jobs ke beech resource contention ho sakta hai.</li>
+
+                <li>Security isolation carefully design karni hoti hai.</li>
+
+                <li>Special hardware requirements ke liye dedicated runner better ho sakta hai.</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 6. GROUP RUNNER -->
+        <!-- ========================================================= -->
+
+        <section id="group">
+
+            <h2>6. Group Runner</h2>
+
+            <p>
+
+                <strong>Group Runner</strong> ek GitLab Group ke scope
+                mein configure kiya ja sakta hai aur group ke eligible
+                projects ke CI/CD jobs ko execute karne ke liye use hota hai.
+
+            </p>
+
+
+            <h3>Example</h3>
+
+            <div class="diagram">
+
+DevOps-Team
+│
+├── Docker Project
+├── Kubernetes Project
+├── Terraform Project
+└── Python Project
+        │
+        └── Group Runner
+
+            </div>
+
+
+            <p>
+
+                Yahan Group Runner ko DevOps-Team ke projects ke
+                common CI/CD workloads ke liye use kiya ja sakta hai.
+
+            </p>
+
+
+            <h3>Group Runner kab useful hai?</h3>
+
+            <ul>
+
+                <li>Ek organization/group ke multiple related projects hon.</li>
+
+                <li>Same build environment use karna ho.</li>
+
+                <li>Runner ko group level par centrally manage karna ho.</li>
+
+                <li>Projects ko common CI infrastructure dena ho.</li>
+
+            </ul>
+
+
+            <h3>Example</h3>
+
+            <p>
+
+                Suppose tumhare group mein:
+
+            </p>
+
+            <pre><code>
+DevOps-Learning
+├── docker-project
+├── kubernetes-project
+├── terraform-project
+└── python-project
+            </code></pre>
+
+
+            <p>
+
+                Ek group runner in projects ke compatible jobs
+                execute kar sakta hai, provided project/runner
+                configuration allows it.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 7. PROJECT SPECIFIC -->
+        <!-- ========================================================= -->
+
+        <section id="specific">
+
+            <h2>7. Project-specific Runner</h2>
+
+            <p>
+
+                Project-specific Runner ko ek particular project
+                ke CI/CD workloads ke liye dedicate kiya ja sakta hai.
+
+            </p>
+
+
+            <div class="diagram">
+
+GitLab
+│
+├── Project A
+│     │
+│     └── Project Runner A
+│
+├── Project B
+│     │
+│     └── Project Runner B
+│
+└── Project C
+      │
+      └── Project Runner C
+
+            </div>
+
+
+            <h3>Example</h3>
+
+            <p>
+
+                Suppose production deployment ke liye ek project ko
+                private network ke andar available machine ki
+                requirement hai.
+
+            </p>
+
+            <p>
+
+                Us case mein dedicated project runner useful ho sakta hai.
+
+            </p>
+
+
+            <h3>Advantages</h3>
+
+            <ul>
+
+                <li>Project-specific control.</li>
+
+                <li>Dedicated execution environment.</li>
+
+                <li>Special tools/hardware install kar sakte ho.</li>
+
+                <li>Production deployment workflows ke liye useful.</li>
+
+                <li>Workload isolation improve kar sakta hai.</li>
+
+            </ul>
+
+
+            <h3>Example Special Environment</h3>
+
+            <pre><code>
+Project:
+production-deployment
+
+Runner:
+Private Linux Server
+
+Installed:
+Docker
+AWS CLI
+kubectl
+Terraform
+Helm
+            </code></pre>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 8. COMPARISON -->
+        <!-- ========================================================= -->
+
+        <section id="scope">
+
+            <h2>8. Shared vs Group vs Project-specific Runner</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>Feature</th>
+
+                        <th>Shared / Instance</th>
+
+                        <th>Group</th>
+
+                        <th>Project-specific</th>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Scope</td>
+
+                        <td>
+                            Broad instance level
+                        </td>
+
+                        <td>
+                            Group
+                        </td>
+
+                        <td>
+                            Specific project
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Projects</td>
+
+                        <td>
+                            Multiple eligible projects
+                        </td>
+
+                        <td>
+                            Group ke eligible projects
+                        </td>
+
+                        <td>
+                            Specific project
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Isolation</td>
+
+                        <td>
+                            Lower compared with dedicated setup
+                        </td>
+
+                        <td>
+                            Group-scoped
+                        </td>
+
+                        <td>
+                            Highest scope-level control
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Management</td>
+
+                        <td>
+                            Central/instance administration
+                        </td>
+
+                        <td>
+                            Group-level management
+                        </td>
+
+                        <td>
+                            Project-level management
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Best Use</td>
+
+                        <td>
+                            Common workloads
+                        </td>
+
+                        <td>
+                            Related project workloads
+                        </td>
+
+                        <td>
+                            Dedicated/special workloads
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>Example</td>
+
+                        <td>
+                            Organization CI jobs
+                        </td>
+
+                        <td>
+                            DevOps team projects
+                        </td>
+
+                        <td>
+                            Production deployment
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 9. HOSTED VS SELF MANAGED -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>9. GitLab-hosted vs Self-managed Runner Context</h2>
+
+            <p>
+
+                Runner infrastructure ko broadly do operational
+                approaches mein samajh sakte ho:
+
+            </p>
+
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>GitLab-hosted</h3>
+
+                    <p>
+
+                        GitLab-provided managed execution infrastructure
+                        jahan user ko underlying runner machine maintain
+                        karne ki responsibility limited hoti hai.
+
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Self-managed</h3>
+
+                    <p>
+
+                        Organization/user apne infrastructure par
+                        GitLab Runner install, configure aur maintain karta hai.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <h3>Self-managed Runner Example</h3>
+
+            <pre><code>
+AWS EC2
+   |
+   +-- Linux
+   |
+   +-- GitLab Runner
+   |
+   +-- Docker
+   |
+   +-- AWS CLI
+   |
+   +-- kubectl
+            </code></pre>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 10. EXECUTORS -->
+        <!-- ========================================================= -->
+
+        <section id="executor">
+
+            <h2>10. GitLab Runner Executors</h2>
+
+            <p>
+
+                <strong>Executor</strong> define karta hai ki
+                GitLab Runner CI/CD job ko kis environment/method
+                se execute karega.
+
+            </p>
+
+
+            <h3>Common Executor Concepts</h3>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Shell</h3>
+
+                    <p>
+                        Job host machine ke shell environment mein run hoti hai.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Docker</h3>
+
+                    <p>
+                        Job container environment mein execute hoti hai.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Kubernetes</h3>
+
+                    <p>
+                        Jobs Kubernetes environment mein pods ke through execute ki ja sakti hain.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>SSH</h3>
+
+                    <p>
+                        Remote machine par jobs execute karne ka executor option.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="info">
+
+                GitLab Runner mein aur bhi executor/integration options
+                available ho sakte hain. Exact supported executors
+                current GitLab Runner documentation aur installed
+                Runner version ke according check karo.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 11. SHELL EXECUTOR -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>11. Shell Executor</h2>
+
+            <p>
+
+                Shell executor jobs ko Runner host machine ke
+                shell environment mein execute karta hai.
+
+            </p>
+
+
+            <h3>Example</h3>
+
+            <pre><code>
+Runner Machine
+      |
+      +-- Ubuntu
+      |
+      +-- GitLab Runner
+      |
+      +-- Bash
+      |
+      +-- Job executes here
+            </code></pre>
+
+
+            <h3>Advantages</h3>
+
+            <ul>
+
+                <li>Simple setup.</li>
+
+                <li>Fast startup.</li>
+
+                <li>Host tools directly available ho sakte hain.</li>
+
+            </ul>
+
+
+            <h3>Risk</h3>
+
+            <p>
+
+                Jobs host machine ke environment ko directly access
+                kar sakti hain, isliye security aur isolation
+                carefully manage karna important hai.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 12. DOCKER EXECUTOR -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>12. Docker Executor</h2>
+
+            <p>
+
+                Docker executor jobs ko containers ke andar execute
+                karne mein help karta hai.
+
+            </p>
+
+
+            <div class="diagram">
+
+GitLab
+  |
+  v
+Runner
+  |
+  v
+Docker Engine
+  |
+  +--------+--------+
+  |        |        |
+Job 1    Job 2    Job 3
+Container Container Container
+
+            </div>
+
+
+            <h3>Benefits</h3>
+
+            <ul>
+
+                <li>Environment isolation.</li>
+
+                <li>Reproducible build environments.</li>
+
+                <li>Different projects ke liye different images.</li>
+
+                <li>Clean CI environments create karna easier.</li>
+
+            </ul>
+
+
+            <h3>Example Image</h3>
+
+            <pre><code>
+image: python:3.12
+
+test:
+  script:
+    - python --version
+    - python app.py
+            </code></pre>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 13. KUBERNETES -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>13. Kubernetes Executor</h2>
+
+            <p>
+
+                Kubernetes executor GitLab CI/CD jobs ko Kubernetes
+                cluster ke pods mein run karne ke liye use kiya ja sakta hai.
+
+            </p>
+
+
+            <div class="diagram">
+
+GitLab
+   |
+   v
+GitLab Runner
+   |
+   v
+Kubernetes API
+   |
+   v
+Pod
+   |
+   +-- CI Job
+
+            </div>
+
+
+            <h3>Useful When</h3>
+
+            <ul>
+
+                <li>Organization already Kubernetes use karti ho.</li>
+
+                <li>Dynamic CI workloads chahiye.</li>
+
+                <li>Scalable execution environment chahiye.</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 14. RUNNER TAGS -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>14. Runner Tags</h2>
+
+            <p>
+
+                Runner tags ka use jobs ko compatible runners se
+                match karne ke liye kiya ja sakta hai.
+
+            </p>
+
+
+            <h3>Example Runner Tags</h3>
+
+            <pre><code>
+docker
+linux
+aws
+kubernetes
+python
+            </code></pre>
+
+
+            <h3>GitLab CI Example</h3>
+
+            <pre><code>
+build:
+  tags:
+    - docker
+
+  script:
+    - echo "Build application"
+            </code></pre>
+
+
+            <p>
+
+                Is example mein job ko <code>docker</code> tag wale
+                suitable runner ke saath schedule kiya ja sakta hai,
+                subject to runner/project configuration.
+
+            </p>
+
+
+            <div class="note">
+
+                <strong>Simple Concept:</strong>
+
+                Tag = Runner ko identify/filter karne ka label.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 15. REGISTER -->
+        <!-- ========================================================= -->
+
+        <section id="register">
+
+            <h2>15. Self-managed GitLab Runner Setup</h2>
+
+            <p>
+
+                Self-managed runner ke case mein pehle compatible
+                machine/server choose kiya jata hai, phir GitLab Runner
+                install aur configure kiya jata hai.
+
+            </p>
+
+
+            <h3>Typical Setup</h3>
+
+            <div class="workflow">
+
+                <div class="step">Server</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Install Runner</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Authenticate/Register</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Choose Executor</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Run Jobs</div>
+
+            </div>
+
+
+            <div class="warning">
+
+                GitLab ne newer Runner registration/authentication
+                workflows introduce kiye hain, isliye exact command
+                aur token flow ko apne current GitLab Runner version
+                ki official documentation/UI ke according follow karo.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 16. CI YAML -->
+        <!-- ========================================================= -->
+
+        <section id="yaml">
+
+            <h2>16. Runner ko .gitlab-ci.yml ke Saath Use Karna</h2>
+
+            <p>
+
+                Project ke root mein commonly
+                <strong>.gitlab-ci.yml</strong> file mein jobs define
+                ki jaati hain.
+
+            </p>
+
+
+            <h3>Basic Example</h3>
+
+            <pre><code>
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - echo "Building application"
+
+test:
+  stage: test
+  script:
+    - echo "Running tests"
+            </code></pre>
+
+
+            <h3>Runner ka Role</h3>
+
+            <div class="diagram">
+
+.gitlab-ci.yml
+      |
+      v
+Pipeline
+      |
+      v
+Jobs
+      |
+      v
+Runner
+      |
+      v
+Execute script
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 17. RUNNER WORKFLOW -->
+        <!-- ========================================================= -->
+
+        <section id="workflow">
+
+            <h2>17. Complete Runner Workflow</h2>
+
+
+            <div class="workflow">
+
+                <div class="step">Developer Push</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">GitLab Pipeline</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Job Created</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Runner Picks Job</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Executor</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Script Runs</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Result</div>
+
+            </div>
+
+
+            <h3>Example</h3>
+
+            <pre><code>
+Developer
+   |
+   | git push
+   v
+GitLab
+   |
+   | Pipeline
+   v
+Build Job
+   |
+   | Runner
+   v
+Docker Executor
+   |
+   v
+Build Application
+   |
+   v
+Test
+   |
+   v
+Deploy
+            </code></pre>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 18. RUNNER AVAILABILITY -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>18. Runner Availability aur Job Scheduling</h2>
+
+            <p>
+
+                Job execute hone ke liye Runner ko job ke requirements
+                ke saath compatible hona chahiye.
+
+            </p>
+
+
+            <p>
+
+                Important factors:
+
+            </p>
+
+            <ul>
+
+                <li>Runner online/available ho.</li>
+
+                <li>Runner project/group/instance scope mein usable ho.</li>
+
+                <li>Runner tags job ke tags se match karte hon, if tags are required.</li>
+
+                <li>Runner executor job requirements support karta ho.</li>
+
+                <li>Runner concurrency/resources sufficient hon.</li>
+
+            </ul>
+
+
+            <div class="danger">
+
+                Agar pipeline mein job pending hai, to blindly code
+                change mat karo. Pehle Runner availability,
+                scope, tags aur configuration check karo.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 19. SECURITY -->
+        <!-- ========================================================= -->
+
+        <section id="security">
+
+            <h2>19. GitLab Runner Security</h2>
+
+            <p>
+
+                Runner CI/CD jobs execute karta hai, isliye Runner
+                security DevOps environment ka important part hai.
+
+            </p>
+
+
+            <h3>Important Security Practices</h3>
+
+            <ul>
+
+                <li>Runner ko trusted projects/workloads ke liye use karo.</li>
+
+                <li>Production runners ko carefully isolate karo.</li>
+
+                <li>Secrets ko Git repository mein hard-code mat karo.</li>
+
+                <li>GitLab CI/CD variables/secrets mechanisms ka use karo.</li>
+
+                <li>Runner host ko regularly patch/update karo.</li>
+
+                <li>Least privilege principle apply karo.</li>
+
+                <li>Docker privileged mode ko unnecessarily enable mat karo.</li>
+
+                <li>Production credentials ko unnecessarily broad access mat do.</li>
+
+            </ul>
+
+
+            <div class="danger">
+
+                <strong>Very Important:</strong>
+
+                Agar untrusted code ko powerful self-managed runner
+                par execute karaya jata hai, to runner host aur
+                credentials ke compromise ka risk ho sakta hai.
+
+                <br><br>
+
+                Isliye runner isolation, permissions aur trust boundary
+                carefully design karna important hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 20. RUNNER TAG EXAMPLE -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>20. Practical Runner Tag Example</h2>
+
+            <p>
+
+                Suppose organization ke paas teen runners hain:
+
+            </p>
+
+            <pre><code>
+Runner 1:
+tags = docker
+
+Runner 2:
+tags = kubernetes
+
+Runner 3:
+tags = aws
+            </code></pre>
+
+
+            <h3>Docker Job</h3>
+
+            <pre><code>
+docker-build:
+  tags:
+    - docker
+
+  script:
+    - docker build -t myapp .
+            </code></pre>
+
+
+            <h3>AWS Job</h3>
+
+            <pre><code>
+deploy:
+  tags:
+    - aws
+
+  script:
+    - echo "Deploying to AWS"
+            </code></pre>
+
+
+            <div class="info">
+
+                Tags scheduling ko control karne mein help karte hain,
+                lekin exact behavior Runner settings aur project
+                configuration par depend karta hai.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 21. RUNNER TYPES SUMMARY -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>21. Runner Types Quick Comparison</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>Runner</th>
+
+                        <th>Scope</th>
+
+                        <th>Best For</th>
+
+                        <th>Example</th>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Shared / Instance
+                        </td>
+
+                        <td>
+                            Broad instance scope
+                        </td>
+
+                        <td>
+                            Common CI workloads
+                        </td>
+
+                        <td>
+                            Build & Test
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Group
+                        </td>
+
+                        <td>
+                            Group
+                        </td>
+
+                        <td>
+                            Related projects
+                        </td>
+
+                        <td>
+                            DevOps Team
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Project-specific
+                        </td>
+
+                        <td>
+                            One project
+                        </td>
+
+                        <td>
+                            Dedicated workload
+                        </td>
+
+                        <td>
+                            Production deployment
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 22. TROUBLESHOOTING -->
+        <!-- ========================================================= -->
+
+        <section id="troubleshoot">
+
+            <h2>22. Common GitLab Runner Problems</h2>
+
+
+            <h3>Problem 1 — Job Pending</h3>
+
+            <p>
+
+                Pipeline job pending hai aur start nahi ho rahi.
+
+            </p>
+
+
+            <h4>Check:</h4>
+
+            <ul>
+
+                <li>Runner online hai?</li>
+
+                <li>Runner project ke liye available hai?</li>
+
+                <li>Tags match kar rahe hain?</li>
+
+                <li>Runner disabled/paused to nahi?</li>
+
+                <li>Runner concurrency/resource issue to nahi?</li>
+
+            </ul>
+
+
+            <h3>Problem 2 — No Runner Available</h3>
+
+            <p>
+
+                Project ke paas suitable runner available nahi hai.
+
+            </p>
+
+
+            <h3>Problem 3 — Tag Mismatch</h3>
+
+            <p>
+
+                Job mein:
+
+            </p>
+
+            <pre><code>
+tags:
+  - docker
+            </code></pre>
+
+
+            <p>
+
+                Lekin suitable runner ke paas docker tag nahi hai.
+
+            </p>
+
+
+            <h3>Problem 4 — Docker Command Failed</h3>
+
+            <p>
+
+                Agar Docker executor use kar rahe ho to Docker image,
+                Docker daemon access aur executor configuration check karo.
+
+            </p>
+
+
+            <h3>Problem 5 — Permission Error</h3>
+
+            <p>
+
+                Runner host par user permissions, filesystem access,
+                Docker permissions aur cloud credentials check karo.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 23. DEVOPS PROJECT -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>23. Practical DevOps Runner Project</h2>
+
+            <h3>Project: GitLab CI/CD with Docker Runner</h3>
+
+            <p>
+
+                Ek Linux VM/EC2 machine par self-managed GitLab Runner
+                setup karo aur Docker-based CI pipeline run karo.
+
+            </p>
+
+
+            <h3>Architecture</h3>
+
+            <div class="diagram">
+
+Developer
+    |
+    | Push
+    v
+GitLab
+    |
+    | CI/CD Pipeline
+    v
+Self-Managed Runner
+    |
+    v
+Docker Executor
+    |
+    +---- Build
+    |
+    +---- Test
+    |
+    +---- Docker Build
+    |
+    +---- Deploy
+
+            </div>
+
+
+            <h3>Learning Goals</h3>
+
+            <ul>
+
+                <li>Runner installation samajhna.</li>
+
+                <li>Runner authentication/registration samajhna.</li>
+
+                <li>Docker executor configure karna.</li>
+
+                <li>Runner tags use karna.</li>
+
+                <li>.gitlab-ci.yml likhna.</li>
+
+                <li>Pipeline execute karna.</li>
+
+                <li>Job logs analyse karna.</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 24. ASSIGNMENT -->
+        <!-- ========================================================= -->
+
+        <section id="assignment">
+
+            <h2>24. Practical Assignment</h2>
+
+            <h3>Assignment 1 — Runner Concepts</h3>
+
+            <ol>
+
+                <li>GitLab Runner kya hai explain karo.</li>
+
+                <li>Runner aur CI/CD job ka relationship explain karo.</li>
+
+                <li>Runner aur Executor ka difference likho.</li>
+
+            </ol>
+
+
+            <h3>Assignment 2 — Runner Types</h3>
+
+            <ol>
+
+                <li>Shared/Instance Runner explain karo.</li>
+
+                <li>Group Runner explain karo.</li>
+
+                <li>Project-specific Runner explain karo.</li>
+
+                <li>Teeno ka comparison table banao.</li>
+
+            </ol>
+
+
+            <h3>Assignment 3 — Practical</h3>
+
+            <ol>
+
+                <li>GitLab project create karo.</li>
+
+                <li>.gitlab-ci.yml file add karo.</li>
+
+                <li>Available runner identify karo.</li>
+
+                <li>Runner tags check karo.</li>
+
+                <li>Simple build job create karo.</li>
+
+                <li>Pipeline run karo.</li>
+
+                <li>Runner job logs study karo.</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 25. INTERVIEW -->
+        <!-- ========================================================= -->
+
+        <section id="interview">
+
+            <h2>25. GitLab Runner Interview Questions</h2>
+
+            <ol>
+
+                <li>What is GitLab Runner?</li>
+
+                <li>Why is GitLab Runner required for CI/CD jobs?</li>
+
+                <li>What is the difference between GitLab and GitLab Runner?</li>
+
+                <li>What is a CI/CD job?</li>
+
+                <li>What is a Runner executor?</li>
+
+                <li>What are the major Runner scopes?</li>
+
+                <li>What is a shared/instance Runner?</li>
+
+                <li>What is a Group Runner?</li>
+
+                <li>What is a project-specific Runner?</li>
+
+                <li>What is the difference between Group Runner and Project Runner?</li>
+
+                <li>What is a self-managed Runner?</li>
+
+                <li>What is a GitLab-hosted Runner?</li>
+
+                <li>What is a Shell executor?</li>
+
+                <li>What is a Docker executor?</li>
+
+                <li>What is a Kubernetes executor?</li>
+
+                <li>What are Runner tags?</li>
+
+                <li>Why can a GitLab job remain pending?</li>
+
+                <li>How do you troubleshoot a Runner?</li>
+
+                <li>Why is Runner security important?</li>
+
+                <li>How does a Runner execute .gitlab-ci.yml jobs?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 26. CHEAT SHEET -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>26. Final Runner Cheat Sheet</h2>
+
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>GitLab</h3>
+
+                    <p>
+                        CI/CD orchestration aur source control platform.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Pipeline</h3>
+
+                    <p>
+                        Automated workflow.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Job</h3>
+
+                    <p>
+                        Pipeline ka individual task.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Runner</h3>
+
+                    <p>
+                        CI/CD job execute karne wala application/agent.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Executor</h3>
+
+                    <p>
+                        Job kis environment/method se execute hogi.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Tag</h3>
+
+                    <p>
+                        Job aur suitable Runner ko match/filter karne ka label.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+
+                <strong>Golden Concept:</strong>
+
+                <br><br>
+
+                Developer Push
+
+                <br>
+                ↓
+                <br>
+
+                GitLab Pipeline
+
+                <br>
+                ↓
+                <br>
+
+                Job
+
+                <br>
+                ↓
+                <br>
+
+                Suitable Runner
+
+                <br>
+                ↓
+                <br>
+
+                Executor
+
+                <br>
+                ↓
+                <br>
+
+                Build / Test / Deploy
+
+            </div>
+
+
+            <div class="success">
+
+                <strong>Runner Scope yaad rakho:</strong>
+
+                <br><br>
+
+                <code>
+                Shared / Instance → Broad scope
+                </code>
+
+                <br><br>
+
+                <code>
+                Group → Group scope
+                </code>
+
+                <br><br>
+
+                <code>
+                Project-specific → One project scope
+                </code>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================================= -->
+
+    <footer>
+
+        <p>
+            GitLab Runners — Complete Detailed Learning Notes
+        </p>
+
+        <p>
+            GitLab • CI/CD • Runner • Docker • Kubernetes • DevOps
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

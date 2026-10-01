@@ -1,0 +1,2254 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GitLab Branch Create & Merge - Complete Guide</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #fc6d26;
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            max-width: 900px;
+            margin: auto;
+            color: #64748b;
+            font-size: 17px;
+        }
+
+        /* ================= NAV ================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            display: inline-block;
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+            font-size: 14px;
+            margin: 5px 9px;
+        }
+
+        nav a:hover {
+            color: #fc6d26;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.05);
+        }
+
+        h2 {
+            color: #fc6d26;
+            font-size: 29px;
+            border-bottom: 2px solid #ffe1d3;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #334155;
+            font-size: 21px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: #475569;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 18px 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #111827;
+        }
+
+        /* ================= CARDS ================= */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: #fc6d26;
+            margin-top: 0;
+        }
+
+        /* ================= NOTES ================= */
+
+        .note {
+            background: #fff7ed;
+            border-left: 5px solid #fc6d26;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .info {
+            background: #eff6ff;
+            border-left: 5px solid #3b82f6;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .success {
+            background: #f0fdf4;
+            border-left: 5px solid #22c55e;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .warning {
+            background: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .danger {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        /* ================= CODE ================= */
+
+        pre {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 8px;
+            padding: 18px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: Consolas, Monaco, monospace;
+            color: #0f172a;
+        }
+
+        .terminal {
+            background: #111827;
+            color: #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        .terminal code {
+            color: #e5e7eb;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 750px;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th,
+        td {
+            border: 1px solid #dbe2ea;
+            padding: 13px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #fff1eb;
+            color: #9a3412;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* ================= WORKFLOW ================= */
+
+        .workflow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .step {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .arrow {
+            font-size: 23px;
+            color: #94a3b8;
+        }
+
+        /* ================= DIAGRAM ================= */
+
+        .diagram {
+            background: #f8fafc;
+            border: 1px solid #dbe3ec;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .arrow {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================================= -->
+    <!-- HEADER -->
+    <!-- ========================================================= -->
+
+    <header>
+
+        <h1>Git Branch Create & Merge</h1>
+
+        <p>
+            Complete GitLab learning notes for understanding branches,
+            creating branches, switching branches, pushing branches,
+            Merge Requests, merging, conflicts, deleting branches
+            and real-world Git branching workflows.
+        </p>
+
+    </header>
+
+
+    <!-- ========================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ========================================================= -->
+
+    <nav>
+
+        <a href="#branch">Branch</a>
+        <a href="#why">Why Branch?</a>
+        <a href="#structure">Structure</a>
+        <a href="#create">Create</a>
+        <a href="#switch">Switch</a>
+        <a href="#push">Push</a>
+        <a href="#merge-request">Merge Request</a>
+        <a href="#merge">Merge</a>
+        <a href="#conflict">Conflict</a>
+        <a href="#delete">Delete</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#commands">Commands</a>
+        <a href="#assignment">Assignment</a>
+        <a href="#interview">Interview</a>
+
+    </nav>
+
+
+    <div class="container">
+
+
+        <!-- ========================================================= -->
+        <!-- 1. WHAT IS BRANCH -->
+        <!-- ========================================================= -->
+
+        <section id="branch">
+
+            <h2>1. What is a Git Branch?</h2>
+
+            <p>
+
+                <strong>Git Branch</strong> ek independent line of
+                development hoti hai jisme tum existing project ke
+                codebase ko affect kiye bina changes develop kar sakte ho.
+
+            </p>
+
+            <p>
+
+                Simple words mein:
+
+                <strong>
+                    Branch = Code ke development ka separate path.
+                </strong>
+
+            </p>
+
+
+            <div class="note">
+
+                <strong>Real-Life Analogy:</strong>
+
+                <br><br>
+
+                Imagine karo tum ek book likh rahe ho.
+
+                <br><br>
+
+                Main book = <strong>main branch</strong>
+
+                <br>
+
+                New chapter ka experiment =
+                <strong>feature branch</strong>
+
+                <br><br>
+
+                Tum experiment kar sakte ho without original
+                book ko directly change kiye.
+
+            </div>
+
+
+            <h3>Default Branch</h3>
+
+            <p>
+
+                Git repository mein commonly
+                <strong>main</strong> branch default branch ke
+                roop mein use hoti hai.
+
+            </p>
+
+            <p>
+
+                Kuch older repositories mein
+                <strong>master</strong> naam bhi mil sakta hai.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 2. WHY BRANCH -->
+        <!-- ========================================================= -->
+
+        <section id="why">
+
+            <h2>2. Branches ki Need Kyu Hoti Hai?</h2>
+
+            <p>
+
+                Agar multiple developers directly main branch par
+                kaam karein to code stability aur collaboration
+                difficult ho sakti hai.
+
+            </p>
+
+
+            <h3>Branches ke Benefits</h3>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Isolation</h3>
+
+                    <p>
+                        New feature ko separate environment mein
+                        develop kar sakte ho.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Safety</h3>
+
+                    <p>
+                        Main branch ko directly affect kiye bina
+                        changes test kar sakte ho.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Collaboration</h3>
+
+                    <p>
+                        Multiple developers parallel development
+                        kar sakte hain.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Code Review</h3>
+
+                    <p>
+                        Feature branch ko Merge Request ke through
+                        review kar sakte ho.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 3. BRANCH STRUCTURE -->
+        <!-- ========================================================= -->
+
+        <section id="structure">
+
+            <h2>3. Branch Structure</h2>
+
+            <p>
+
+                Example project:
+
+            </p>
+
+
+            <div class="diagram">
+
+main
+│
+├── feature-login
+│
+├── feature-payment
+│
+├── feature-dashboard
+│
+└── bugfix-login
+
+            </div>
+
+
+            <p>
+
+                Yahan:
+
+            </p>
+
+            <ul>
+
+                <li>
+                    <strong>main</strong> = stable/main development line
+                </li>
+
+                <li>
+                    <strong>feature-login</strong> = Login feature
+                </li>
+
+                <li>
+                    <strong>feature-payment</strong> = Payment feature
+                </li>
+
+                <li>
+                    <strong>bugfix-login</strong> = Login bug fix
+                </li>
+
+            </ul>
+
+
+            <div class="info">
+
+                Branch names meaningful rakho.
+
+                <br><br>
+
+                Good:
+
+                <code>feature-login</code>
+
+                <br>
+
+                <code>feature-payment</code>
+
+                <br>
+
+                <code>bugfix-navbar</code>
+
+                <br>
+
+                <code>hotfix-production-api</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 4. CHECK BRANCH -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>4. Existing Branches Check Karna</h2>
+
+            <h3>Local Branches</h3>
+
+            <div class="terminal">
+
+                <code>
+git branch
+                </code>
+
+            </div>
+
+
+            <h3>All Local + Remote Branches</h3>
+
+            <div class="terminal">
+
+                <code>
+git branch -a
+                </code>
+
+            </div>
+
+
+            <h3>Current Branch Check</h3>
+
+            <div class="terminal">
+
+                <code>
+git branch --show-current
+                </code>
+
+            </div>
+
+
+            <div class="success">
+
+                <strong>Good Habit:</strong>
+
+                Kaam start karne se pehle check karo ki tum currently
+                kis branch par ho.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 5. CREATE BRANCH -->
+        <!-- ========================================================= -->
+
+        <section id="create">
+
+            <h2>5. Branch Create Karna</h2>
+
+            <h3>Method 1 — Create Branch Only</h3>
+
+            <div class="terminal">
+
+                <code>
+git branch feature-login
+                </code>
+
+            </div>
+
+            <p>
+
+                Ye branch create karega, lekin automatically us branch
+                par switch nahi karega.
+
+            </p>
+
+
+            <h3>Method 2 — Create + Switch</h3>
+
+            <div class="terminal">
+
+                <code>
+git switch -c feature-login
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Ye command:
+
+            </p>
+
+            <ul>
+
+                <li>New branch create karti hai.</li>
+
+                <li>Immediately new branch par switch karti hai.</li>
+
+            </ul>
+
+
+            <div class="success">
+
+                <strong>Recommended beginner command:</strong>
+
+                <br><br>
+
+                <code>
+git switch -c feature-login
+                </code>
+
+            </div>
+
+
+            <h3>Older Git Syntax</h3>
+
+            <div class="terminal">
+
+                <code>
+git checkout -b feature-login
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Ye bhi create + switch karta hai.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 6. SWITCH -->
+        <!-- ========================================================= -->
+
+        <section id="switch">
+
+            <h2>6. Branch Switch Karna</h2>
+
+            <p>
+
+                Existing branch par switch karne ke liye:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git switch main
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Ya:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+git switch feature-login
+                </code>
+
+            </div>
+
+
+            <h3>Older Command</h3>
+
+            <div class="terminal">
+
+                <code>
+git checkout feature-login
+                </code>
+
+            </div>
+
+
+            <div class="warning">
+
+                Branch switch karne se pehle uncommitted changes ko
+                check karna good practice hai.
+
+                <br><br>
+
+                Use:
+
+                <code>git status</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 7. WORK ON BRANCH -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>7. Branch par Code Changes Karna</h2>
+
+            <p>
+
+                Suppose tumne:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+git switch -c feature-login
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Ab tum login feature ke files modify karo.
+
+            </p>
+
+
+            <h3>Check Changes</h3>
+
+            <div class="terminal">
+
+                <code>
+git status
+                </code>
+
+            </div>
+
+
+            <h3>Add Changes</h3>
+
+            <div class="terminal">
+
+                <code>
+git add .
+                </code>
+
+            </div>
+
+
+            <h3>Commit</h3>
+
+            <div class="terminal">
+
+                <code>
+git commit -m "Add login feature"
+                </code>
+
+            </div>
+
+
+            <div class="workflow">
+
+                <div class="step">Create Branch</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Write Code</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git add</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git commit</div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 8. PUSH BRANCH -->
+        <!-- ========================================================= -->
+
+        <section id="push">
+
+            <h2>8. Branch ko GitLab par Push Karna</h2>
+
+            <p>
+
+                Local branch create karne ke baad usko GitLab
+                remote repository par push kar sakte ho.
+
+            </p>
+
+
+            <h3>Command</h3>
+
+            <div class="terminal">
+
+                <code>
+git push -u origin feature-login
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Yahan:
+
+            </p>
+
+            <ul>
+
+                <li>
+                    <strong>git push</strong> =
+                    local commits remote par bhejna
+                </li>
+
+                <li>
+                    <strong>-u</strong> =
+                    upstream tracking set karna
+                </li>
+
+                <li>
+                    <strong>origin</strong> =
+                    remote repository
+                </li>
+
+                <li>
+                    <strong>feature-login</strong> =
+                    branch name
+                </li>
+
+            </ul>
+
+
+            <h3>After First Push</h3>
+
+            <p>
+
+                Upstream set hone ke baad future changes ke liye:
+
+            </p>
+
+            <div class="terminal">
+
+                <code>
+git push
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 9. GITLAB MERGE REQUEST -->
+        <!-- ========================================================= -->
+
+        <section id="merge-request">
+
+            <h2>9. GitLab Merge Request</h2>
+
+            <p>
+
+                GitLab mein branch ke changes ko review aur target
+                branch mein merge karne ke liye
+                <strong>Merge Request (MR)</strong> use hota hai.
+
+            </p>
+
+
+            <h3>Typical Flow</h3>
+
+            <div class="workflow">
+
+                <div class="step">feature-login</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Push</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Merge Request</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Code Review</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Merge</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">main</div>
+
+            </div>
+
+
+            <h3>Merge Request mein kya hota hai?</h3>
+
+            <ul>
+
+                <li>Source branch select karna.</li>
+
+                <li>Target branch select karna.</li>
+
+                <li>Title add karna.</li>
+
+                <li>Description add karna.</li>
+
+                <li>Code changes review karna.</li>
+
+                <li>Reviewers/approvers assign karna, where configured.</li>
+
+                <li>CI/CD pipeline results check karna.</li>
+
+                <li>Approval ke baad merge karna.</li>
+
+            </ul>
+
+
+            <div class="note">
+
+                <strong>Example:</strong>
+
+                <br><br>
+
+                Source:
+
+                <code>feature-login</code>
+
+                <br>
+
+                Target:
+
+                <code>main</code>
+
+                <br><br>
+
+                Meaning:
+
+                "Mere login feature ke changes ko main branch
+                mein merge karne ke liye review karo."
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 10. MERGE -->
+        <!-- ========================================================= -->
+
+        <section id="merge">
+
+            <h2>10. Branch Merge Karna</h2>
+
+            <p>
+
+                Merge ka purpose ek branch ke changes ko doosri
+                branch mein integrate karna hai.
+
+            </p>
+
+
+            <h3>Example</h3>
+
+            <div class="diagram">
+
+main
+  │
+  ├── feature-login
+  │       │
+  │       └── Login changes
+  │
+  └──────────────→ Merge into main
+
+            </div>
+
+
+            <h3>Step 1 — Main Branch par Switch</h3>
+
+            <div class="terminal">
+
+                <code>
+git switch main
+                </code>
+
+            </div>
+
+
+            <h3>Step 2 — Latest Main Changes Get Karo</h3>
+
+            <div class="terminal">
+
+                <code>
+git pull origin main
+                </code>
+
+            </div>
+
+
+            <h3>Step 3 — Feature Branch Merge Karo</h3>
+
+            <div class="terminal">
+
+                <code>
+git merge feature-login
+                </code>
+
+            </div>
+
+
+            <h3>Step 4 — Main ko GitLab par Push Karo</h3>
+
+            <div class="terminal">
+
+                <code>
+git push origin main
+                </code>
+
+            </div>
+
+
+            <div class="success">
+
+                Complete local merge workflow:
+
+                <br><br>
+
+                <code>
+git switch main
+                </code>
+
+                <br>
+
+                <code>
+git pull origin main
+                </code>
+
+                <br>
+
+                <code>
+git merge feature-login
+                </code>
+
+                <br>
+
+                <code>
+git push origin main
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 11. FAST FORWARD -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>11. Fast-Forward Merge</h2>
+
+            <p>
+
+                Agar main branch par feature branch create hone ke
+                baad koi new commit nahi hua aur history linear hai,
+                Git fast-forward merge kar sakta hai.
+
+            </p>
+
+
+            <div class="diagram">
+
+Before:
+
+main
+  |
+  A
+  |
+  B
+  |
+feature
+  |
+  C
+  |
+  D
+
+
+After Fast-Forward:
+
+main
+  |
+  A
+  |
+  B
+  |
+  C
+  |
+  D
+
+            </div>
+
+
+            <p>
+
+                Is case mein Git ko separate merge commit ki
+                zarurat nahi pad sakti.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 12. THREE WAY -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>12. Three-Way Merge</h2>
+
+            <p>
+
+                Agar main aur feature branch dono independently
+                change ho gaye hain, Git ko common ancestor ke
+                basis par changes integrate karne pad sakte hain.
+
+            </p>
+
+
+            <div class="diagram">
+
+        B
+       / \
+      C   D
+      |   |
+      E   F
+       \ /
+        M
+
+M = Merge Commit
+
+            </div>
+
+
+            <p>
+
+                Is situation mein merge commit create ho sakta hai,
+                depending on history and merge strategy.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 13. MERGE CONFLICT -->
+        <!-- ========================================================= -->
+
+        <section id="conflict">
+
+            <h2>13. Merge Conflict</h2>
+
+            <p>
+
+                Merge conflict tab ho sakta hai jab Git automatically
+                determine nahi kar pata ki conflicting changes ko
+                kaise combine karna hai.
+
+            </p>
+
+
+            <h3>Example</h3>
+
+            <div class="diagram">
+
+main:
+<h1>Welcome to GitLab</h1>
+
+feature:
+<h1>Welcome to DevOps</h1>
+
+Git ko decide karna hai
+ki final version kya hona chahiye.
+
+            </div>
+
+
+            <h3>Conflict Workflow</h3>
+
+            <div class="workflow">
+
+                <div class="step">Merge</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Conflict</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Edit File</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">git add</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Commit</div>
+
+            </div>
+
+
+            <h3>Step 1 — Conflict Check</h3>
+
+            <div class="terminal">
+
+                <code>
+git status
+                </code>
+
+            </div>
+
+
+            <h3>Step 2 — Conflicting File Open Karo</h3>
+
+            <p>
+
+                File mein conflict markers appear ho sakte hain:
+
+            </p>
+
+
+            <pre><code>
+<<<<<<< HEAD
+Current branch code
+=======
+Incoming branch code
+>>>>>>> feature-login
+            </code></pre>
+
+
+            <h3>Step 3 — Correct Code Select Karo</h3>
+
+            <p>
+
+                Final desired code rakho aur conflict markers remove karo.
+
+            </p>
+
+
+            <h3>Step 4 — Stage</h3>
+
+            <div class="terminal">
+
+                <code>
+git add .
+                </code>
+
+            </div>
+
+
+            <h3>Step 5 — Complete Merge</h3>
+
+            <div class="terminal">
+
+                <code>
+git commit
+                </code>
+
+            </div>
+
+
+            <h3>Step 6 — Push</h3>
+
+            <div class="terminal">
+
+                <code>
+git push origin main
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 14. ABORT MERGE -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>14. Merge Abort Karna</h2>
+
+            <p>
+
+                Agar merge conflict ke beech mein tum merge process
+                cancel karna chahte ho:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git merge --abort
+                </code>
+
+            </div>
+
+
+            <div class="warning">
+
+                Ye command merge conflict state se bahar aane ke
+                liye use ki ja sakti hai jab merge operation active ho.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 15. DELETE -->
+        <!-- ========================================================= -->
+
+        <section id="delete">
+
+            <h2>15. Branch Delete Karna</h2>
+
+            <h3>Local Branch Delete</h3>
+
+            <div class="terminal">
+
+                <code>
+git branch -d feature-login
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Ye safely merged branch ko delete karne ke liye
+                commonly use hota hai.
+
+            </p>
+
+
+            <h3>Force Delete</h3>
+
+            <div class="terminal">
+
+                <code>
+git branch -D feature-login
+                </code>
+
+            </div>
+
+
+            <div class="danger">
+
+                <strong>Warning:</strong>
+
+                <code>-D</code> force deletion karta hai.
+                Unmerged changes wali branch delete karte waqt
+                carefully use karo.
+
+            </div>
+
+
+            <h3>Remote Branch Delete</h3>
+
+            <div class="terminal">
+
+                <code>
+git push origin --delete feature-login
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 16. GITLAB BRANCH UI -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>16. GitLab Web Interface se Branch Create Karna</h2>
+
+            <p>
+
+                GitLab website ke project interface se bhi branch
+                create ki ja sakti hai.
+
+            </p>
+
+
+            <ol>
+
+                <li>GitLab project open karo.</li>
+
+                <li>Repository/Code area open karo.</li>
+
+                <li>Branches section open karo.</li>
+
+                <li>New branch option select karo.</li>
+
+                <li>Branch name enter karo.</li>
+
+                <li>Source branch select karo.</li>
+
+                <li>Branch create karo.</li>
+
+            </ol>
+
+
+            <div class="info">
+
+                Web UI se branch create karne ke baad tum us branch
+                ko local machine par fetch karke switch kar sakte ho.
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 17. REMOTE BRANCH -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>17. Remote Branch ko Local Machine par Lana</h2>
+
+            <p>
+
+                Agar kisi teammate ne GitLab par branch create ki hai,
+                to local repository mein remote branch information
+                update karne ke liye:
+
+            </p>
+
+
+            <div class="terminal">
+
+                <code>
+git fetch origin
+                </code>
+
+            </div>
+
+
+            <h3>Remote Branch Check</h3>
+
+            <div class="terminal">
+
+                <code>
+git branch -r
+                </code>
+
+            </div>
+
+
+            <h3>Branch Checkout/Switch</h3>
+
+            <div class="terminal">
+
+                <code>
+git switch feature-login
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Modern Git versions matching remote branches ko
+                automatically track kar sakti hain; zarurat par
+                explicit tracking set ki ja sakti hai.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 18. REAL WORLD WORKFLOW -->
+        <!-- ========================================================= -->
+
+        <section id="workflow">
+
+            <h2>18. Real-World GitLab Branching Workflow</h2>
+
+
+            <div class="workflow">
+
+                <div class="step">main</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Create Feature Branch</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Develop</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Commit</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Push</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Merge Request</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Review</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">CI/CD</div>
+
+                <div class="arrow">→</div>
+
+                <div class="step">Merge</div>
+
+            </div>
+
+
+            <h3>Example</h3>
+
+            <div class="terminal">
+
+                <code>
+# Update main
+
+git switch main
+
+git pull origin main
+
+
+# Create feature branch
+
+git switch -c feature-login
+
+
+# Work on code
+
+
+# Check changes
+
+git status
+
+
+# Stage
+
+git add .
+
+
+# Commit
+
+git commit -m "Add login feature"
+
+
+# Push branch
+
+git push -u origin feature-login
+
+
+# Create Merge Request in GitLab
+
+
+# After approval, merge into main
+                </code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 19. FEATURE BRANCH -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>19. Common Branch Naming Convention</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>Type</th>
+
+                        <th>Example</th>
+
+                        <th>Purpose</th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Feature</td>
+
+                        <td>
+                            feature/login
+                        </td>
+
+                        <td>
+                            New feature development
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Bugfix</td>
+
+                        <td>
+                            bugfix/login-error
+                        </td>
+
+                        <td>
+                            Bug fix
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Hotfix</td>
+
+                        <td>
+                            hotfix/payment-crash
+                        </td>
+
+                        <td>
+                            Urgent production fix
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Release</td>
+
+                        <td>
+                            release/v1.2.0
+                        </td>
+
+                        <td>
+                            Release preparation
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 20. MAIN COMMANDS -->
+        <!-- ========================================================= -->
+
+        <section id="commands">
+
+            <h2>20. Branch Command Cheat Sheet</h2>
+
+            <pre><code>
+# Show branches
+git branch
+
+# Show all branches
+git branch -a
+
+# Show current branch
+git branch --show-current
+
+# Create branch
+git branch feature-login
+
+# Create + switch
+git switch -c feature-login
+
+# Switch branch
+git switch main
+
+# Old create + switch syntax
+git checkout -b feature-login
+
+# Push new branch
+git push -u origin feature-login
+
+# Fetch remote branches
+git fetch origin
+
+# Merge branch
+git merge feature-login
+
+# Delete local branch
+git branch -d feature-login
+
+# Force delete local branch
+git branch -D feature-login
+
+# Delete remote branch
+git push origin --delete feature-login
+
+# Check status
+git status
+            </code></pre>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 21. BRANCH VS COPY -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>21. Branch vs Separate Project</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>Branch</th>
+
+                        <th>Separate Project</th>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Same repository ke andar hoti hai.
+                        </td>
+
+                        <td>
+                            Separate repository hoti hai.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Feature development ke liye useful.
+                        </td>
+
+                        <td>
+                            Completely different project ke liye useful.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Same Git history share karti hai.
+                        </td>
+
+                        <td>
+                            Separate Git history hoti hai.
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Merge Request se main branch mein merge ho sakti hai.
+                        </td>
+
+                        <td>
+                            Normally independent lifecycle hota hai.
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 22. COMMON MISTAKES -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>22. Common Branching Mistakes</h2>
+
+            <div class="danger">
+
+                <h3>Mistake 1</h3>
+
+                <p>
+                    Directly main branch par har feature develop karna.
+                </p>
+
+
+                <h3>Mistake 2</h3>
+
+                <p>
+                    Branch create karne ke baad branch check na karna.
+                </p>
+
+
+                <h3>Mistake 3</h3>
+
+                <p>
+                    Wrong branch par commit kar dena.
+                </p>
+
+
+                <h3>Mistake 4</h3>
+
+                <p>
+                    Remote push karne se pehle remote URL check na karna.
+                </p>
+
+
+                <h3>Mistake 5</h3>
+
+                <p>
+                    Merge conflict ko samjhe bina random code delete karna.
+                </p>
+
+
+                <h3>Mistake 6</h3>
+
+                <p>
+                    Unmerged branch ko force delete kar dena.
+                </p>
+
+            </div>
+
+
+            <div class="success">
+
+                <strong>Best Habit:</strong>
+
+                <br><br>
+
+                Har important operation se pehle:
+
+                <br><br>
+
+                <code>git status</code>
+
+                <br>
+
+                <code>git branch --show-current</code>
+
+                <br>
+
+                <code>git remote -v</code>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 23. PRACTICAL ASSIGNMENT -->
+        <!-- ========================================================= -->
+
+        <section id="assignment">
+
+            <h2>23. Practical Assignment</h2>
+
+            <h3>Assignment: Feature Branch → Merge</h3>
+
+            <ol>
+
+                <li>GitLab par ek project create karo.</li>
+
+                <li>Project ko local machine par clone karo.</li>
+
+                <li>Main branch par initial commit karo.</li>
+
+                <li>Feature branch create karo.</li>
+
+                <li>Feature branch par new file create karo.</li>
+
+                <li>Changes commit karo.</li>
+
+                <li>Feature branch GitLab par push karo.</li>
+
+                <li>GitLab par Merge Request create karo.</li>
+
+                <li>Changes review karo.</li>
+
+                <li>Merge Request merge karo.</li>
+
+                <li>Main branch update karo.</li>
+
+                <li>Feature branch delete karo.</li>
+
+            </ol>
+
+
+            <h3>Practice Commands</h3>
+
+            <div class="terminal">
+
+                <code>
+git clone git@gitlab.com:USERNAME/PROJECT.git
+
+cd PROJECT
+
+git switch main
+
+git pull origin main
+
+git switch -c feature-login
+
+echo "Login feature" > login.txt
+
+git add .
+
+git commit -m "Add login feature"
+
+git push -u origin feature-login
+                </code>
+
+            </div>
+
+
+            <p>
+
+                Iske baad GitLab website par Merge Request create karo.
+
+            </p>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 24. INTERVIEW -->
+        <!-- ========================================================= -->
+
+        <section id="interview">
+
+            <h2>24. Git Branch Interview Questions</h2>
+
+            <ol>
+
+                <li>What is a Git branch?</li>
+
+                <li>Why are branches used?</li>
+
+                <li>What is the main branch?</li>
+
+                <li>How do you create a new branch?</li>
+
+                <li>How do you switch branches?</li>
+
+                <li>What is the difference between git branch and git switch?</li>
+
+                <li>How do you create and switch to a branch in one command?</li>
+
+                <li>How do you push a new branch to GitLab?</li>
+
+                <li>What is a Merge Request?</li>
+
+                <li>What is the difference between Pull Request and Merge Request?</li>
+
+                <li>How do you merge a branch locally?</li>
+
+                <li>What is a fast-forward merge?</li>
+
+                <li>What is a three-way merge?</li>
+
+                <li>What is a merge conflict?</li>
+
+                <li>How do you resolve a merge conflict?</li>
+
+                <li>How do you abort a merge?</li>
+
+                <li>How do you delete a local branch?</li>
+
+                <li>How do you delete a remote branch?</li>
+
+                <li>What is a feature branch?</li>
+
+                <li>What is a hotfix branch?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- ========================================================= -->
+        <!-- 25. FINAL REVISION -->
+        <!-- ========================================================= -->
+
+        <section>
+
+            <h2>25. Final Revision</h2>
+
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Branch</h3>
+
+                    <p>
+                        Independent line of development.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Feature Branch</h3>
+
+                    <p>
+                        New feature develop karne ke liye.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Merge Request</h3>
+
+                    <p>
+                        GitLab mein code review aur merge workflow.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Merge</h3>
+
+                    <p>
+                        Ek branch ke changes ko doosri branch mein integrate karna.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Conflict</h3>
+
+                    <p>
+                        Jab Git changes ko automatically combine nahi kar pata.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Delete</h3>
+
+                    <p>
+                        Merged/unneeded branch ko remove karna.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="note">
+
+                <strong>Golden Workflow:</strong>
+
+                <br><br>
+
+                <code>
+main
+→ feature branch
+→ code
+→ commit
+→ push
+→ Merge Request
+→ review
+→ CI/CD
+→ merge
+→ main
+                </code>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================================= -->
+
+    <footer>
+
+        <p>
+            GitLab Branch Create & Merge — Complete Learning Notes
+        </p>
+
+        <p>
+            Git • GitLab • Branch • Merge Request • CI/CD
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>
